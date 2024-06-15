@@ -1,0 +1,56 @@
+> anything not filled (asteroids), must be drawn using StdDraw pen radius of 0.002
+
+Asteroids (3 sizes: 25% small, 25% medium, 50% large; 10, 20, 30 pixels and 200, 100, 50 points respectively)
+    -initial location must be generated randomly
+    -The direction of motion for each asteroid must be drawn uniformly from the interval [0, 2π)
+    -asteroids must traven at 1px per time step
+    -wrap edges of game screen
+    -create 10 when game starts
+
+
+
+Enemy Saucer (400 puntas)
+    -open rectangles (width: 20, Height: 10), constant speed of 2px per time step
+    -generate initial position randomly
+    -The initial direction of motion for each saucer must be drawn uniformly from the interval [0, 2π)
+    -On each time step a saucer must select a new direction of motion with probability .05. The direction of motion must be drawn uniformly from the interval [0, 2π). 
+    -do not wrap edges of game screen
+    -added to the gameon each time step with 0.002 probability
+
+
+
+Player Ship
+    -start at center of screen facing upward
+    -open isosceles triangle (base: 10, height: 20px). //GameUtils.drawPoseAsTriangle()
+    -steer ship with StdDraw.isKeyPressed()
+        -TURNING: On each time step, if the user is pressing the left arrow key (java.awt.event.KeyEvent.VK_LEFT) the ship must be turned .1 radians to the left. If the user is pressing the right arrow key java.awt.event.KeyEvent.VK_RIGHT the ship must be turned .1 radians to the right. 
+    -On each time step the speed of the ship must be reduced to 99% of it's speed on the previous time step. 
+    -wraps game edges
+
+
+
+Bullets (filled circles; radius: 1.5px)
+    -You must use the StdDraw.hasNextKeyTyped and StdDraw.nextKeyTyped methods to detect space bar presses.
+    -move at 20 pixels per time step
+    -wrap game edges
+
+
+
+-perform approximate collision detection by associating each game element with an appropriate collision radius. For the case of the circular elements (Asteroids and Bullets) this should match the radius of the element. For the case of non-circular objects (Ship and Saucers) this radius should be chosen to be half the length of the longest axis of the element. For example, the ship's longest axis is 20 pixels, so the collision radius should be 10 pixels. A collision should occur whenever two objects are near enough that the circles defined by their collision radii overlap. 
+-Whenever a collision occurs, both elements involved in the collision must be destroyed and removed from the screen
+
+Background:
+
+Stars
+    -closed circles with radius = 1px
+    -generate locations randomly
+    -create 100 when game starts
+
+
+Scoreboard ("Score: 0")
+    -centered 60px from left edge and 20px from top of screen
+    -starts at 0
+
+Lives
+    -Centered 60px from left edge and 60px from top of screen
+    -starts at 3
