@@ -35,6 +35,7 @@ public class GameDriver {
         StdDraw.setXscale(0, SCREEN_WIDTH);
         StdDraw.setYscale(0, SCREEN_HEIGHT);
         StdDraw.enableDoubleBuffering();
+        
 
         // Create a game object
         Playable game;
@@ -48,7 +49,6 @@ public class GameDriver {
             StdDraw.show();
             StdDraw.pause(DRAW_DELAY);
         }
-
     }
 
 }
