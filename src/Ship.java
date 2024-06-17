@@ -1,16 +1,10 @@
 package src;
 
-public class Ship extends Collisions
+public class Ship extends Collisions implements Playable
 {
-    private double speed;
-    private int xPos;
-    private int yPos;
-    private int pointValue;
-    private boolean isAlive;
 
     private Pose pose;
     private Vector2D velocity;
-
     
     public static final double WIDTH = 10.0;
     public static final double HEIGHT = 20.0;
@@ -19,13 +13,13 @@ public class Ship extends Collisions
     public Ship()
     {
         this.speed = 1.0;
-        this.xPos = GameDriver.SCREEN_WIDTH/2;
-        this.yPos = GameDriver.SCREEN_HEIGHT/2;
+        setX(GameDriver.SCREEN_WIDTH/2);
+        setY(GameDriver.SCREEN_HEIGHT/2);
         this.pose = new Pose(getXPos(), getYPos(), INIT_HEADING);
-        this.pointValue = 0;
         this.isAlive = true;
         this.velocity = new Vector2D(this.pose.getHeading(), 0);
-
+        setSpeed(2.0);
+        setAlive();
     }
 
     @Override
@@ -33,16 +27,6 @@ public class Ship extends Collisions
         boolean coll = false;
 
         return coll; //TODO stub
-    }
-
-    @Override
-    public int getXPos() {
-        return this.xPos;
-    }
-
-    @Override
-    public int getYPos() {
-        return this.yPos;
     }
 
     @Override
@@ -56,6 +40,7 @@ public class Ship extends Collisions
 
     @Override
     public void update() {
+        
         if (StdDraw.isKeyPressed(java.awt.event.KeyEvent.VK_LEFT))
         {
             pose = pose.newHeading(pose.getHeading() + 0.1);
@@ -68,17 +53,39 @@ public class Ship extends Collisions
 
         if (StdDraw.isKeyPressed(java.awt.event.KeyEvent.VK_UP))
         {            
-            velocity = new Vector2D(pose.getHeading(), speed);
+            velocity = new Vector2D(pose.getHeading(), getSpeed());
             pose = pose.move(velocity);
-            
         } else 
         {
-            
             velocity = velocity.newMagnitude(velocity.getMagnitude() * 0.99);
             pose = pose.move(velocity);
-        
         }
 
+        //check if the ship has gone offscreen and wrap
+        if (pose.getX() > GameDriver.SCREEN_WIDTH)
+        {
+            setX(1);
+            pose = pose.newX(getXPos());
+        } 
+    
+        if (pose.getX() < 1)
+        {
+            setX(GameDriver.SCREEN_WIDTH - 1);
+            pose = pose.newX(getXPos());
+        } 
+
+
+        if (pose.getY() > GameDriver.SCREEN_HEIGHT) 
+        {
+            setY(1);
+            pose = pose.newY(getYPos());
+        }
+
+        if (pose.getY() < 1) 
+        {
+            setY(GameDriver.SCREEN_HEIGHT - 1);
+            pose = pose.newY(getYPos());
+        }
 
     }
     

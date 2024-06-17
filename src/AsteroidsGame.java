@@ -8,7 +8,7 @@ public class AsteroidsGame implements Playable
     public AsteroidsGame()
     {
         playerShip = new Ship();
-        
+ 
     }
 
     /**
@@ -16,7 +16,6 @@ public class AsteroidsGame implements Playable
      */
     @Override
     public void update() {
-        // TODO Auto-generated method stub
         playerShip.update();
     }
 
@@ -25,7 +24,6 @@ public class AsteroidsGame implements Playable
      */
     @Override
     public void draw() {
-        // TODO Auto-generated method stub
         playerShip.draw();
     }
 }
