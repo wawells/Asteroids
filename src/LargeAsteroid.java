@@ -25,5 +25,11 @@ public class LargeAsteroid extends Collisions implements Asteroid {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'hasCollided'");
     }
+
+    @Override
+    public double getHeading() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getHeading'");
+    }
     
 }
