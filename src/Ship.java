@@ -7,7 +7,8 @@ public class Ship extends Collisions implements Playable
     public static final double HEIGHT = 20.0;
     public static final double INIT_HEADING = 1.5708;
 
-    private boolean canShoot;
+    private int numFired;
+    private boolean canShoot, firing;
 
     public Ship()
     {
@@ -20,6 +21,8 @@ public class Ship extends Collisions implements Playable
         setCollided(false);
 
         this.canShoot = false;
+        this.firing = false;
+        this.numFired = 1;
     }
 
     @Override
@@ -33,6 +36,8 @@ public class Ship extends Collisions implements Playable
     @Override
     public void update() {
         
+        this.canShoot = false;
+
         if (StdDraw.isKeyPressed(java.awt.event.KeyEvent.VK_LEFT))
         {
             setPose(pose.newHeading(pose.getHeading() + 0.1));
@@ -56,25 +61,53 @@ public class Ship extends Collisions implements Playable
         
         if (StdDraw.hasNextKeyTyped())
         {
-            char temp = StdDraw.nextKeyTyped();
+            char key = StdDraw.nextKeyTyped();
 
-            if (temp == ' ')
+            if (key == ' ')
             {
                 this.canShoot = true;
-            }
-            else
-            {
-                 this.canShoot = false;
+                this.firing = true;
+                addFired();
             }
         }
+
         
         this.checkOffscreen();
 
     }
 
+    public int getNumFired()
+    {
+        return this.numFired;
+    }
+
     public boolean canShoot()
     {
         return this.canShoot;
+    }
+
+    public boolean firing()
+    {
+        return this.firing;
+    }
+
+    public void stopFiring()
+    {
+        this.firing = false;
+    }
+    public void addFired()
+    {
+        this.numFired++;
+    }
+
+    public void setNumFired(int num)
+    {
+        this.numFired = num;
+    }
+
+    public void removeFired()
+    {
+        if (numFired > 0) this.numFired--;
     }
 
 }

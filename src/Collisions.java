@@ -1,6 +1,6 @@
 package src;
 
-public abstract class Collisions
+public class Collisions
 {
     protected double xPosition;
     protected double yPosition;
@@ -94,13 +94,9 @@ public abstract class Collisions
 
 
 
-
-
-
-
-
-
-
+    /**
+     * Determines if the pose object is off of the screen and wraps to the appropriate side.
+     */
     public void checkOffscreen()
     {
         if (pose.getX() > GameDriver.SCREEN_WIDTH)

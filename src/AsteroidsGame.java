@@ -8,11 +8,14 @@ public class AsteroidsGame implements Playable
     private MediumAsteroid a8, a9, a10, a11, a12;
     private LargeAsteroid a13, a14, a15;
 
-    Bullet b1, b2, b3, b4, b5;
+    private Bullet b1, b2, b3;
 
+    private int numFired;
 
     public AsteroidsGame()
     {
+
+        numFired = 0;
         ship = new Ship();
         a1 = new SmallAsteroid();
         a2 = new SmallAsteroid();
@@ -32,13 +35,6 @@ public class AsteroidsGame implements Playable
         a14 = new LargeAsteroid();
         a15 = new LargeAsteroid();
 
-        b1 = new Bullet(ship.getXPos(), ship.getYPos());
-        b2 = new Bullet(ship.getXPos(), ship.getYPos());
-        b3 = new Bullet(ship.getXPos(), ship.getYPos());
-        b4 = new Bullet(ship.getXPos(), ship.getYPos());
-        b5 = new Bullet(ship.getXPos(), ship.getYPos());
-
-
     }
 
     
@@ -47,8 +43,8 @@ public class AsteroidsGame implements Playable
      */
     @Override
     public void draw() {
+        
         ship.draw();
-
         a1.draw();
         a2.draw();
         a3.draw();
@@ -65,12 +61,22 @@ public class AsteroidsGame implements Playable
         a14.draw();
         a15.draw();
 
-        b1.draw();
-        b2.draw();
-        b3.draw();
-        b4.draw();
-        b5.draw();
-
+        
+        if (ship.firing())
+        {
+            switch (numFired) {
+                case 1:
+                    b1.draw();
+                    break;
+                case 2:
+                    b2.draw();
+                    break;
+                case 3:
+                    b3.draw();
+                    break;
+            }
+            
+        }
 
 
     }
@@ -81,23 +87,45 @@ public class AsteroidsGame implements Playable
     @Override
     public void update() {
 
-        checkCollisions();
+        
 
         ship.update();
+
         if (ship.canShoot())
         {
-            if (!b1.exceededSteps())
-            {
-                b1.setVisible();
-                b1 = new Bullet(ship.getXPos(), ship.getYPos(), true);
-                
-                b1.setPose(new Pose(b1.getXPos(), b1.getYPos(), ship.getPose().getHeading()));
-                b1.setX(b1.getPose().getX());
-                b1.setY(b1.getPose().getY());
-
+            numFired = ship.getNumFired();
+            switch (numFired) {
+                case 1:
+                    b1 = new Bullet(ship);
+                    break;
+                case 2:
+                    b2 = new Bullet(ship);
+                    break;
+                case 3:
+                    b3 = new Bullet(ship);
+                case 4:
+                    ship.setNumFired(1);
+                    break;
             }
+            
         }
 
+        if (ship.firing())
+        {
+            switch (numFired) {
+                case 1:
+                    b1.update();
+                    break;
+                case 2:
+                    b2.update();
+                    break;
+                case 3:
+                    b3.update();
+                    break;
+            }
+            
+        }
+  
 
         a1.update();
         a2.update();
@@ -114,6 +142,8 @@ public class AsteroidsGame implements Playable
         a13.update();
         a14.update();
         a15.update();
+
+        checkCollisions();
  
     }
     
