@@ -1,6 +1,7 @@
 package src;
 
-public enum Star{
+public enum Star
+{
     SMALL(5),
     MEDIUM(10),
     LARGE(15);

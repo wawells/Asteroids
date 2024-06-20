@@ -1,55 +1,53 @@
 package src;
 
-public class SmallAsteroid extends Collisions implements Asteroid {
+public class SmallAsteroid extends Collisions implements Asteroid 
+{
 
     public static int RADIUS = 10;
-    private Pose pose;
-    private Vector2D velocity;
 
     public SmallAsteroid()
     {
-        setPoints(200);
+        this.setX(GameDriver.GENERATOR.nextDouble(20, GameDriver.SCREEN_WIDTH - 20));
+        this.setY(GameDriver.GENERATOR.nextDouble(20, GameDriver.SCREEN_HEIGHT - 20));
         setSpeed(1.0);
-        setXY();
-        //the heading here shouldn't matter... Right guys?
-        this.pose = new Pose(getXPos(), getYPos(), 1);
-        this.velocity = new Vector2D(getHeading(), getSpeed());
+        //the heading of a circle shouldn't matter... Right guys?
+        setPose(new Pose(getXPos(), getYPos(), this.getHeading()));
+        setVelocity(new Vector2D(this.pose.getHeading(), getSpeed()));
+
+        setCollided(false);
+        setPoints(200);
     }
 
 
+    
     @Override
-    public void update() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'update'");
-    }
-
-    @Override
-    public void draw() {
+    public void draw() 
+    {
         StdDraw.setPenRadius(0.002);
-        StdDraw.circle(getXPos(), getYPos(), getRadius());
+        if (!hasCollided()) StdDraw.circle(getXPos(), getYPos(), getRadius());
+    }
+    
+    @Override
+    public void update() 
+    {
+        setPose(pose.move(velocity));
+        setX(getPose().getX());
+        setY(getPose().getY());
+        
+        //check if the ship has gone offscreen and wrap
+        this.checkOffscreen();
     }
 
+    @Override
+    public int getRadius() 
+    {
+        return RADIUS;
+    }
+    
     @Override
     public double getHeading()
     {
-        return GameDriver.GENERATOR.nextDouble(0, 2 * Math.PI);
-    }
-
-    @Override
-    public int getRadius() {
-        return RADIUS;
-    }
-
-    @Override
-    public boolean hasCollided() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'hasCollided'");
-    }
-
-
-    private void setXY()
-    {
-
+        return GameDriver.GENERATOR.nextDouble(0.5, 2 * Math.PI);
     }
     
 }

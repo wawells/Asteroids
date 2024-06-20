@@ -1,35 +1,58 @@
 package src;
 
-public class LargeAsteroid extends Collisions implements Asteroid {
+public class LargeAsteroid extends Collisions implements Asteroid 
+{
 
+    public static int RADIUS = 40;
+
+    public LargeAsteroid()
+    {
+
+        setX(GameDriver.GENERATOR.nextDouble(0, GameDriver.SCREEN_WIDTH));
+        setY(GameDriver.GENERATOR.nextDouble(0, GameDriver.SCREEN_HEIGHT));
+        setPoints(200);
+        setSpeed(1.0);
+        //the heading of a circle shouldn't matter... Right guys?
+        setPose(new Pose(getXPos(), getYPos(), getHeading()));
+        setVelocity(new Vector2D(getHeading(), getSpeed()));
+        setCollided(false);
+    }
+
+    
     @Override
-    public void update() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'update'");
+    public void update() 
+    {
+        setPose(pose.move(velocity));
+        setX(getPose().getX());
+        setY(getPose().getY());
+        
+        //check if the ship has gone offscreen and wrap
+        this.checkOffscreen();
+
     }
 
     @Override
-    public void draw() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'draw'");
+    public void draw() 
+    {
+        StdDraw.setPenRadius(0.002);
+        if (!hasCollided()) StdDraw.circle(getXPos(), getYPos(), getRadius());
+
+        
     }
 
     @Override
-    public int getRadius() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getRadius'");
+    public int getRadius() 
+    {
+        return RADIUS;
+
     }
 
-    @Override
-    public boolean hasCollided() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'hasCollided'");
-    }
 
     @Override
-    public double getHeading() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getHeading'");
+    public double getHeading() 
+    {
+        return GameDriver.GENERATOR.nextDouble(0, 2 * Math.PI);
+
     }
     
 }

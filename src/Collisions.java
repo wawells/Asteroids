@@ -2,19 +2,21 @@ package src;
 
 public abstract class Collisions
 {
-    protected int xPosition;
-    protected int yPosition;
+    protected double xPosition;
+    protected double yPosition;
     protected int lives;
     protected int points;
     protected double speed;
-    protected boolean isAlive;
-    
-    public int getXPos()
+    protected Pose pose;
+    protected Vector2D velocity;
+    protected boolean collided;
+
+    public double getXPos()
     {
         return this.xPosition;
     }
     
-    public int getYPos()
+    public double getYPos()
     {
         return this.yPosition;
     }
@@ -34,17 +36,27 @@ public abstract class Collisions
         return this.speed;
     }
 
-    public boolean isAlive()
+    public Pose getPose()
     {
-        return this.isAlive;
+        return this.pose;
     }
 
-    public void setX(int x)
+    public Vector2D getVelocity()
+    {
+        return this.velocity;
+    }
+
+    public boolean hasCollided()
+    {
+        return this.collided;
+    }
+
+    public void setX(double x)
     {
         this.xPosition = x;
     }
 
-    public void setY(int y)
+    public void setY(double y)
     {
         this.yPosition = y;
     }
@@ -62,18 +74,58 @@ public abstract class Collisions
     public void setSpeed(double value)
     {
         this.speed = value;
-    }
+    } 
 
-    public void setAlive()
+
+    public void setPose(Pose pose)
     {
-        this.isAlive = true;
+        this.pose = pose;
     }
-
-    public void setDead()
+    
+    public void setVelocity(Vector2D velocity)
     {
-        this.isAlive = false;
+        this.velocity = velocity;
     }
 
-    public abstract boolean hasCollided();
+    public void setCollided(boolean value)
+    {
+        this.collided = value;
+    }
 
+
+
+
+
+
+
+
+
+
+    public void checkOffscreen()
+    {
+        if (pose.getX() > GameDriver.SCREEN_WIDTH)
+        {
+            setX(1);
+            pose = pose.newX(getXPos());
+        } 
+    
+        if (pose.getX() < 1)
+        {
+            setX(GameDriver.SCREEN_WIDTH - 1);
+            pose = pose.newX(getXPos());
+        } 
+
+
+        if (pose.getY() > GameDriver.SCREEN_HEIGHT) 
+        {
+            setY(1);
+            pose = pose.newY(getYPos());
+        }
+
+        if (pose.getY() < 1) 
+        {
+            setY(GameDriver.SCREEN_HEIGHT - 1);
+            pose = pose.newY(getYPos());
+        }
+    }
 }

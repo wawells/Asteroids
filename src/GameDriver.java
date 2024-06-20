@@ -38,8 +38,7 @@ public class GameDriver {
         
 
         // Create a game object
-        Playable game;
-        game = new AsteroidsGame();
+        Playable game = new AsteroidsGame();
         
         // Main game loop
         while (true) {
