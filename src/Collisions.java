@@ -1,6 +1,6 @@
 package src;
 
-public class Collisions
+public abstract class Collisions implements Playable
 {
     protected double xPosition;
     protected double yPosition;
@@ -9,7 +9,6 @@ public class Collisions
     protected double speed;
     protected Pose pose;
     protected Vector2D velocity;
-    protected boolean collided;
 
     public double getXPos()
     {
@@ -46,9 +45,9 @@ public class Collisions
         return this.velocity;
     }
 
-    public boolean hasCollided()
+    public boolean hasCollided(Collisions other)
     {
-        return this.collided;
+        return getPose().getX() == other.getPose().getX() && getPose().getY() == other.getPose().getY();
     }
 
     public void setX(double x)
@@ -85,11 +84,6 @@ public class Collisions
     public void setVelocity(Vector2D velocity)
     {
         this.velocity = velocity;
-    }
-
-    public void setCollided(boolean value)
-    {
-        this.collided = value;
     }
 
 

@@ -1,6 +1,6 @@
 package src;
 
-public class Bullet extends Collisions implements Playable 
+public class Bullet extends Collisions
 {
 
     public static final double RADIUS = 1.5;
@@ -18,7 +18,6 @@ public class Bullet extends Collisions implements Playable
         setVelocity(new Vector2D(getPose().getHeading(), getSpeed()));
         
         stepCount = 0;
-        setCollided(false);
         setPoints(0);
     }
 
@@ -50,6 +49,8 @@ public class Bullet extends Collisions implements Playable
     {
         return this.stepCount >= 20;
     }
+
+
     
 
 

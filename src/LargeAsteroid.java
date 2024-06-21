@@ -15,7 +15,6 @@ public class LargeAsteroid extends Collisions implements Asteroid
         //the heading of a circle shouldn't matter... Right guys?
         setPose(new Pose(getXPos(), getYPos(), getHeading()));
         setVelocity(new Vector2D(getHeading(), getSpeed()));
-        setCollided(false);
     }
 
     
@@ -26,7 +25,6 @@ public class LargeAsteroid extends Collisions implements Asteroid
         setX(getPose().getX());
         setY(getPose().getY());
         
-        //check if the ship has gone offscreen and wrap
         this.checkOffscreen();
 
     }
@@ -35,7 +33,7 @@ public class LargeAsteroid extends Collisions implements Asteroid
     public void draw() 
     {
         StdDraw.setPenRadius(0.002);
-        if (!hasCollided()) StdDraw.circle(getXPos(), getYPos(), getRadius());
+        StdDraw.circle(getXPos(), getYPos(), getRadius());
 
         
     }
@@ -54,5 +52,11 @@ public class LargeAsteroid extends Collisions implements Asteroid
         return GameDriver.GENERATOR.nextDouble(0, 2 * Math.PI);
 
     }
+
+    public boolean collided(Collisions other)
+    {
+        return getXPos() == other.getXPos() && getYPos() == other.getYPos();
+    }
+
     
 }

@@ -6,7 +6,7 @@ public class AsteroidsGame implements Playable
     private Ship ship;
     private SmallAsteroid a1, a2, a3, a4, a5, a6, a7;
     private MediumAsteroid a8, a9, a10, a11, a12;
-    private LargeAsteroid a13, a14, a15;
+    private LargeAsteroid a13, a14, a15, a16, a17;
 
     private Bullet b1, b2, b3;
 
@@ -34,6 +34,9 @@ public class AsteroidsGame implements Playable
         a13 = new LargeAsteroid();
         a14 = new LargeAsteroid();
         a15 = new LargeAsteroid();
+        a16 = new LargeAsteroid();
+        a17 = new LargeAsteroid();
+
 
     }
 
@@ -52,29 +55,36 @@ public class AsteroidsGame implements Playable
         a5.draw();
         a6.draw();
         a7.draw();
+
         a8.draw();
         a9.draw();
         a10.draw();
         a11.draw();
         a12.draw();
+
         a13.draw();
         a14.draw();
         a15.draw();
+        a16.draw();
+        a17.draw();
+
+        
 
         
         if (ship.firing())
         {
-            switch (numFired) {
-                case 1:
-                    b1.draw();
-                    break;
-                case 2:
-                    b2.draw();
-                    break;
-                case 3:
-                    b3.draw();
-                    break;
-            }
+            b1.draw();
+            // switch (numFired) {
+            //     case 1:
+            //         b1.draw();
+            //         break;
+            //     case 2:
+            //         b2.draw();
+            //         break;
+            //     case 3:
+            //         b3.draw();
+            //         break;
+            // }
             
         }
 
@@ -93,40 +103,41 @@ public class AsteroidsGame implements Playable
 
         if (ship.canShoot())
         {
-            numFired = ship.getNumFired();
-            switch (numFired) {
-                case 1:
-                    b1 = new Bullet(ship);
-                    break;
-                case 2:
-                    b2 = new Bullet(ship);
-                    break;
-                case 3:
-                    b3 = new Bullet(ship);
-                case 4:
-                    ship.setNumFired(1);
-                    break;
-            }
+            b1 = new Bullet(ship);
+            // numFired = ship.getNumFired();
+            // switch (numFired) {
+            //     case 1:
+            //         b1 = new Bullet(ship);
+            //         break;
+            //     case 2:
+            //         b2 = new Bullet(ship);
+            //         break;
+            //     case 3:
+            //         b3 = new Bullet(ship);
+            //     case 4:
+            //         ship.setNumFired(1);
+            //         break;
+            // }
             
         }
 
         if (ship.firing())
         {
-            switch (numFired) {
-                case 1:
-                    b1.update();
-                    break;
-                case 2:
-                    b2.update();
-                    break;
-                case 3:
-                    b3.update();
-                    break;
-            }
+            b1.update();
+            // switch (numFired) {
+            //     case 1:
+            //         b1.update();
+            //         break;
+            //     case 2:
+            //         b2.update();
+            //         break;
+            //     case 3:
+            //         b3.update();
+            //         break;
+            // }
             
         }
   
-
         a1.update();
         a2.update();
         a3.update();
@@ -134,14 +145,19 @@ public class AsteroidsGame implements Playable
         a5.update();
         a6.update();
         a7.update();
+
         a8.update();
         a9.update();
         a10.update();
         a11.update();
         a12.update();
+
         a13.update();
         a14.update();
         a15.update();
+        a16.update();
+        a17.update();
+
 
         checkCollisions();
  
@@ -152,8 +168,12 @@ public class AsteroidsGame implements Playable
     private void checkCollisions()
     {
 
+        if (ship.hit(a1, a2, a3, a4, a5, a6, a7) || ship.hit(a8, a9, a10, a11, a12) || ship.hit(a13, a14, a15, a16, a17))
+        {
+            System.out.println("I'M HIT SARGE");
+            ship = new Ship(ship.getLives() - 1);
+        }
     }
-    
     
 }
 

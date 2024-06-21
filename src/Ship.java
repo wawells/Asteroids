@@ -1,6 +1,6 @@
 package src;
 
-public class Ship extends Collisions implements Playable
+public class Ship extends Collisions
 {
     
     public static final double WIDTH = 10.0;
@@ -12,17 +12,22 @@ public class Ship extends Collisions implements Playable
 
     public Ship()
     {
+        this(3);
+    }
+
+    public Ship(int lives)
+    {
         setX(GameDriver.SCREEN_WIDTH/2);
         setY(GameDriver.SCREEN_HEIGHT/2);
         setSpeed(2.0);
         setPose(new Pose(getXPos(), getYPos(), INIT_HEADING));
         setVelocity(new Vector2D(this.pose.getHeading(), 0));
         
-        setCollided(false);
+        setLives(lives);
 
         this.canShoot = false;
         this.firing = false;
-        this.numFired = 1;
+        this.numFired = 0;
     }
 
     @Override
@@ -53,10 +58,14 @@ public class Ship extends Collisions implements Playable
         {            
             setVelocity(new Vector2D(pose.getHeading(), getSpeed()));
             setPose(pose.move(velocity));
+            setX(getPose().getX());
+            setY(getPose().getY());
         } else 
         {
             setVelocity(velocity.newMagnitude(velocity.getMagnitude() * 0.99));
             setPose(pose.move(velocity));
+            setX(getPose().getX());
+            setY(getPose().getY());
         }
         
         if (StdDraw.hasNextKeyTyped())
@@ -109,5 +118,66 @@ public class Ship extends Collisions implements Playable
     {
         if (numFired > 0) this.numFired--;
     }
+
+    public Ship destroy()
+    {
+        return new Ship(getLives() - 1);
+    }
+
+
+    public boolean hit (SmallAsteroid... sml)
+    {
+        boolean hit = false;
+        if (sml.length > 1)
+        {
+            for (int i = 0; i < sml.length && !hit; i++)
+            {
+                hit = hasCollided(sml[i]);
+            }
+        } else if (sml.length == 1)
+        {
+            hit = hasCollided(sml[0]);
+        }
+
+        return hit;
+    }
+
+    public boolean hit(MediumAsteroid... med)
+    {
+        boolean hit = false;
+        if (med.length > 1)
+        {
+            for (int i = 0; i < med.length && !hit; i++)
+            {
+                hit = hasCollided(med[i]);
+            }
+        } else if (med.length == 1)
+        {
+            hit = hasCollided(med[0]);
+        }
+
+        return hit;
+
+    }
+
+    public boolean hit(LargeAsteroid... lrg)
+    {
+        boolean hit = false;
+        if (lrg.length > 1)
+        {
+            for (int i = 0; i < lrg.length && !hit; i++)
+            {
+                hit = hasCollided(lrg[i]);
+            }
+        } else if (lrg.length == 1)
+        {
+            hit = hasCollided(lrg[0]);
+        }
+
+        return hit;
+
+    }
+
+
 
 }

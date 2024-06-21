@@ -14,7 +14,6 @@ public class SmallAsteroid extends Collisions implements Asteroid
         setPose(new Pose(getXPos(), getYPos(), this.getHeading()));
         setVelocity(new Vector2D(this.pose.getHeading(), getSpeed()));
 
-        setCollided(false);
         setPoints(200);
     }
 
@@ -24,7 +23,7 @@ public class SmallAsteroid extends Collisions implements Asteroid
     public void draw() 
     {
         StdDraw.setPenRadius(0.002);
-        if (!hasCollided()) StdDraw.circle(getXPos(), getYPos(), getRadius());
+        StdDraw.circle(getXPos(), getYPos(), getRadius());
     }
     
     @Override
@@ -34,7 +33,6 @@ public class SmallAsteroid extends Collisions implements Asteroid
         setX(getPose().getX());
         setY(getPose().getY());
         
-        //check if the ship has gone offscreen and wrap
         this.checkOffscreen();
     }
 
@@ -48,6 +46,13 @@ public class SmallAsteroid extends Collisions implements Asteroid
     public double getHeading()
     {
         return GameDriver.GENERATOR.nextDouble(0.5, 2 * Math.PI);
+    }
+
+
+
+    public boolean collided(Collisions other)
+    {
+        return getPose().equals(other.getPose());
     }
     
 }
