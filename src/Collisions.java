@@ -47,7 +47,7 @@ public abstract class Collisions implements Playable
 
     public boolean hasCollided(Collisions other)
     {
-        return getPose().getX() == other.getPose().getX() && getPose().getY() == other.getPose().getY();
+        return Math.abs(getPose().getX() - other.getPose().getX()) < 15.0 && Math.abs(getPose().getY() - other.getPose().getY()) < 15.0;
     }
 
     public void setX(double x)
