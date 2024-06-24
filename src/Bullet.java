@@ -51,6 +51,12 @@ public class Bullet extends Collisions
     }
 
 
+    @Override
+    public void destroy()
+    {
+        
+    }
+
     
 
 

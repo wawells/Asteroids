@@ -34,7 +34,6 @@ public class LargeAsteroid extends Collisions implements Asteroid
     {
         StdDraw.setPenRadius(0.002);
         StdDraw.circle(getXPos(), getYPos(), getRadius());
-
         
     }
 
@@ -58,5 +57,10 @@ public class LargeAsteroid extends Collisions implements Asteroid
         return getXPos() == other.getXPos() && getYPos() == other.getYPos();
     }
 
+    @Override
+    public void destroy()
+    {
+        
+    }
     
 }

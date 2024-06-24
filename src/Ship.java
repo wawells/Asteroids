@@ -8,7 +8,9 @@ public class Ship extends Collisions
     public static final double INIT_HEADING = 1.5708;
 
     private int numFired;
-    private boolean canShoot, firing;
+    private boolean canShoot;
+    private boolean firing;
+    private boolean hasLives;
 
     public Ship()
     {
@@ -28,6 +30,7 @@ public class Ship extends Collisions
         this.canShoot = false;
         this.firing = false;
         this.numFired = 0;
+        this.hasLives = true;
     }
 
     @Override
@@ -41,6 +44,8 @@ public class Ship extends Collisions
     @Override
     public void update() {
         
+        if (getLives() < 1) this.hasLives = false;
+
         this.canShoot = false;
 
         if (StdDraw.isKeyPressed(java.awt.event.KeyEvent.VK_LEFT))
@@ -100,6 +105,11 @@ public class Ship extends Collisions
         return this.firing;
     }
 
+    public boolean hasLives()
+    {
+        return this.hasLives;
+    }
+
     public void stopFiring()
     {
         this.firing = false;
@@ -119,9 +129,10 @@ public class Ship extends Collisions
         if (numFired > 0) this.numFired--;
     }
 
-    public Ship destroy()
+    @Override
+    public void destroy()
     {
-        return new Ship(getLives() - 1);
+        
     }
 
 
@@ -132,11 +143,11 @@ public class Ship extends Collisions
         {
             for (int i = 0; i < sml.length && !hit; i++)
             {
-                hit = hasCollided(sml[i]);
+                hit = hasCollided(sml[i], SmallAsteroid.RADIUS);
             }
         } else if (sml.length == 1)
         {
-            hit = hasCollided(sml[0]);
+            hit = hasCollided(sml[0], SmallAsteroid.RADIUS);
         }
 
         return hit;
@@ -149,11 +160,11 @@ public class Ship extends Collisions
         {
             for (int i = 0; i < med.length && !hit; i++)
             {
-                hit = hasCollided(med[i]);
+                hit = hasCollided(med[i], MediumAsteroid.RADIUS);
             }
         } else if (med.length == 1)
         {
-            hit = hasCollided(med[0]);
+            hit = hasCollided(med[0], MediumAsteroid.RADIUS);
         }
 
         return hit;
@@ -167,16 +178,18 @@ public class Ship extends Collisions
         {
             for (int i = 0; i < lrg.length && !hit; i++)
             {
-                hit = hasCollided(lrg[i]);
+                hit = hasCollided(lrg[i], LargeAsteroid.RADIUS);
             }
         } else if (lrg.length == 1)
         {
-            hit = hasCollided(lrg[0]);
+            hit = hasCollided(lrg[0], LargeAsteroid.RADIUS);
         }
 
         return hit;
 
     }
+
+    
 
 
 

@@ -55,4 +55,9 @@ public class SmallAsteroid extends Collisions implements Asteroid
         return getPose().equals(other.getPose());
     }
     
+    @Override
+    public void destroy()
+    {
+        
+    }
 }

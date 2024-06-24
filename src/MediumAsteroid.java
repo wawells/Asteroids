@@ -48,6 +48,12 @@ public class MediumAsteroid extends Collisions implements Asteroid
 
     }
 
+    @Override
+    public void destroy()
+    {
+        
+    }
+
 
 
     

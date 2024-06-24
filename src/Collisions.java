@@ -45,9 +45,9 @@ public abstract class Collisions implements Playable
         return this.velocity;
     }
 
-    public boolean hasCollided(Collisions other)
+    public boolean hasCollided(Collisions other, double distance)
     {
-        return Math.abs(getPose().getX() - other.getPose().getX()) < 15.0 && Math.abs(getPose().getY() - other.getPose().getY()) < 15.0;
+        return Math.abs(getPose().getX() - other.getPose().getX()) < distance && Math.abs(getPose().getY() - other.getPose().getY()) < distance;
     }
 
     public void setX(double x)
@@ -85,6 +85,8 @@ public abstract class Collisions implements Playable
     {
         this.velocity = velocity;
     }
+
+    public abstract void destroy();
 
 
 

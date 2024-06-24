@@ -170,8 +170,15 @@ public class AsteroidsGame implements Playable
 
         if (ship.hit(a1, a2, a3, a4, a5, a6, a7) || ship.hit(a8, a9, a10, a11, a12) || ship.hit(a13, a14, a15, a16, a17))
         {
-            System.out.println("I'M HIT SARGE");
-            ship = new Ship(ship.getLives() - 1);
+            if (ship.hasLives())
+            {
+                int lives = ship.getLives();
+                System.out.println("Reducing Lives by one: " + lives);
+                ship = new Ship(lives - 1);
+            } else
+            {
+                ship.destroy();
+            }
         }
     }
     
