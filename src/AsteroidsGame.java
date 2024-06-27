@@ -6,6 +6,7 @@ package src;
  */
 public class AsteroidsGame implements Playable
 {
+    private Star[] stars;
 
     private Ship ship;
     private SmallAsteroid a1, a2, a3, a4, a5, a6, a7;
@@ -14,12 +15,19 @@ public class AsteroidsGame implements Playable
 
     private Bullet b1, b2, b3;
 
-    private int numFired;
+    private int steps;
 
     public AsteroidsGame()
     {
 
-        numFired = 0;
+        stars = new Star[100];
+        //create stars
+        for (int i = 0; i < stars.length; i++)
+        {
+            stars[i] = Star.SMALL;
+        }
+
+        steps = 0;
         ship = new Ship();
         a1 = new SmallAsteroid();
         a2 = new SmallAsteroid();
@@ -50,6 +58,16 @@ public class AsteroidsGame implements Playable
      */
     @Override
     public void draw() {
+
+        //draw stars
+        if (steps == 0 || steps % 25 == 0)
+        {
+            for (int i = 0; i < stars.length; i++)
+            {
+                stars[i].draw();
+            }
+
+        }
         
         ship.draw();
         a1.draw();
@@ -100,7 +118,7 @@ public class AsteroidsGame implements Playable
     @Override
     public void update() {
 
-        
+        steps++;
 
         ship.update();
 
@@ -182,9 +200,7 @@ public class AsteroidsGame implements Playable
             } else
             {
                 int lives = ship.getLives();
-                System.out.println("Reducing Lives by one: " + lives);
                 ship = new Ship(lives - 1);
-                System.out.println("New Lives: " + ship.getLives());
             }
         }
     }
@@ -193,74 +209,3 @@ public class AsteroidsGame implements Playable
 
 
 
-
-
-
-
-
-
-
-
-
-// private void checkCommands()
-    // {
-    //     if (StdDraw.isKeyPressed(java.awt.event.KeyEvent.VK_LEFT))
-    //     {
-    //         //pose = pose.newHeading(pose.getHeading() + 0.1);
-    //         ship = ship.newHeading(ship.getHeading() + 0.1);
-
-    //     }
-
-    //     if (StdDraw.isKeyPressed(java.awt.event.KeyEvent.VK_RIGHT))
-    //     {
-    //         //pose = pose.newHeading(pose.getHeading() - 0.1);
-    //         ship = ship.newHeading(ship.getHeading() - 0.1);
-    //     }
-
-    //     if (StdDraw.isKeyPressed(java.awt.event.KeyEvent.VK_UP))
-    //     {            
-    //         //velocity = new Vector2D(getHeading(), getSpeed());
-    //         //pose = pose.move(velocity);
-
-    //         ship.setVelocity(ship.getSpeed());
-    //         ship.setMagnitude(ship.getVelocity().getMagnitude());
-    //         ship = ship.move(ship.getVelocity());
-
-    //     } else 
-    //     {
-    //         //velocity = velocity.newMagnitude(velocity.getMagnitude() * 0.99);
-    //         //pose = pose.move(velocity);
-    //         //ship.setVelocity(ship.getVelocity().getMagnitude() * 0.99);
-            
-    //         System.out.println("vel: " + ship.getVelocity().getMagnitude());
-    //     }
-    // }
-
-    // private void checkShipPos()
-    // {
-    //     //check if the ship has gone offscreen and wrap
-    //     // if (pose.getX() > GameDriver.SCREEN_WIDTH)
-    //     // {
-    //     //     setX(1);
-    //     //     pose = pose.newX(getXPos());
-    //     // } 
-    
-    //     // if (pose.getX() < 1)
-    //     // {
-    //     //     setX(GameDriver.SCREEN_WIDTH - 1);
-    //     //     pose = pose.newX(getXPos());
-    //     // } 
-
-
-    //     // if (pose.getY() > GameDriver.SCREEN_HEIGHT) 
-    //     // {
-    //     //     setY(1);
-    //     //     pose = pose.newY(getYPos());
-    //     // }
-
-    //     // if (pose.getY() < 1) 
-    //     // {
-    //     //     setY(GameDriver.SCREEN_HEIGHT - 1);
-    //     //     pose = pose.newY(getYPos());
-    //     // }
-    // }
