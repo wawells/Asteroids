@@ -52,6 +52,23 @@ public class MediumAsteroid extends Collisions implements Asteroid
 
     }
 
+    /**
+     * Generates and returns an array of MediumAsteroid of size num.
+     * @param num the number of MediumAsteroid to create
+     * @return an array of type MediumAsteroid
+     */
+    public static MediumAsteroid[] getAsteroids(int num)
+    {
+        MediumAsteroid[] mdms = new MediumAsteroid[num];
+
+        for (int i = 0; i < mdms.length; i++)
+        {
+            mdms[i] = new MediumAsteroid();
+        }
+
+        return mdms;
+    }
+
     @Override
     public void destroy()
     {

@@ -66,15 +66,22 @@ public class LargeAsteroid extends Collisions implements Asteroid
 
     }
 
-    // /**
-    //  * Determines if this object has the same coordinates as another.
-    //  * @param other the other collidable object with x and y coordiates to check.
-    //  * @return true if this has collided with other.
-    //  */
-    // public boolean collided(Collisions other)
-    // {
-    //     return getXPos() == other.getXPos() && getYPos() == other.getYPos();
-    // }
+    /**
+     * Generates and returns an array of LargeAsteroid of size num.
+     * @param num the number of LargeAsteroid to create
+     * @return an array of type LargeAsteroid
+     */
+    public static LargeAsteroid[] getAsteroids(int num)
+    {
+        LargeAsteroid[] lrgs = new LargeAsteroid[num];
+
+        for (int i = 0; i < lrgs.length; i++)
+        {
+            lrgs[i] = new LargeAsteroid();
+        }
+
+        return lrgs;
+    }
 
     @Override
     public void destroy()

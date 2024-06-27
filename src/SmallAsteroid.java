@@ -52,6 +52,23 @@ public class SmallAsteroid extends Collisions implements Asteroid
         return GameDriver.GENERATOR.nextDouble(0.5, 2 * Math.PI);
     }
 
+    /**
+     * Generates and returns an array of SmallAsteroids of size num.
+     * @param num the number of small asteroids to create
+     * @return an array of type SmallAsteroid
+     */
+    public static SmallAsteroid[] getAsteroids(int num)
+    {
+        SmallAsteroid[] smls = new SmallAsteroid[num];
+
+        for (int i = 0; i < smls.length; i++)
+        {
+            smls[i] = new SmallAsteroid();
+        }
+
+        return smls;
+    }
+
 
 
     // public boolean collided(Collisions other)

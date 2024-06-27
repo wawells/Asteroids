@@ -6,50 +6,28 @@ package src;
  */
 public class AsteroidsGame implements Playable
 {
-    private Star[] stars;
-
     private Ship ship;
-    private SmallAsteroid a1, a2, a3, a4, a5, a6, a7;
-    private MediumAsteroid a8, a9, a10, a11, a12;
-    private LargeAsteroid a13, a14, a15, a16, a17;
 
-    private Bullet b1, b2, b3;
+    private Star[] stars;
+    private SmallAsteroid[] smallAs;
+    private MediumAsteroid[] medAs;
+    private LargeAsteroid[] lrgAs;
 
-    private int steps;
+    private Bullet b1;
+
 
     public AsteroidsGame()
     {
 
-        stars = new Star[100];
-        //create stars
-        for (int i = 0; i < stars.length; i++)
-        {
-            stars[i] = Star.SMALL;
-        }
+        //draw the stars
+        stars = Star.getStars(100);
 
-        steps = 0;
         ship = new Ship();
-        a1 = new SmallAsteroid();
-        a2 = new SmallAsteroid();
-        a3 = new SmallAsteroid();
-        a4 = new SmallAsteroid();
-        a5 = new SmallAsteroid();
-        a6 = new SmallAsteroid();
-        a7 = new SmallAsteroid();
         
-        a8 = new MediumAsteroid();
-        a9 = new MediumAsteroid();
-        a10 = new MediumAsteroid();
-        a11 = new MediumAsteroid();
-        a12 = new MediumAsteroid();
-        
-        a13 = new LargeAsteroid();
-        a14 = new LargeAsteroid();
-        a15 = new LargeAsteroid();
-        a16 = new LargeAsteroid();
-        a17 = new LargeAsteroid();
-
-
+        //create Asteroids
+        smallAs = SmallAsteroid.getAsteroids(5);
+        medAs = MediumAsteroid.getAsteroids(5);
+        lrgAs = LargeAsteroid.getAsteroids(5);
     }
 
     
@@ -60,55 +38,34 @@ public class AsteroidsGame implements Playable
     public void draw() {
 
         //draw stars
-        if (steps == 0 || steps % 25 == 0)
+        for (int i = 0; i < stars.length; i++)
         {
-            for (int i = 0; i < stars.length; i++)
-            {
-                stars[i].draw();
-            }
-
+            stars[i].draw();
         }
-        
+
         ship.draw();
-        a1.draw();
-        a2.draw();
-        a3.draw();
-        a4.draw();
-        a5.draw();
-        a6.draw();
-        a7.draw();
 
-        a8.draw();
-        a9.draw();
-        a10.draw();
-        a11.draw();
-        a12.draw();
-
-        a13.draw();
-        a14.draw();
-        a15.draw();
-        a16.draw();
-        a17.draw();
-
-        
-
-        
-        if (ship.firing())
+        //draw small asteroids
+        for (int i = 0; i < smallAs.length; i++)
         {
-            b1.draw();
-            // switch (numFired) {
-            //     case 1:
-            //         b1.draw();
-            //         break;
-            //     case 2:
-            //         b2.draw();
-            //         break;
-            //     case 3:
-            //         b3.draw();
-            //         break;
-            // }
-            
+            smallAs[i].draw();
         }
+
+        //draw medium asteroids
+        for (int i = 0; i < medAs.length; i++)
+        {
+            medAs[i].draw();
+        }
+
+        //draw large asteroids
+        for (int i = 0; i < lrgAs.length; i++)
+        {
+            lrgAs[i].draw();
+        }
+        
+
+        //only draw the bullet if the ship has fired.
+        if (ship.firing()) b1.draw();
 
     }
     
@@ -118,70 +75,33 @@ public class AsteroidsGame implements Playable
     @Override
     public void update() {
 
-        steps++;
 
         ship.update();
 
-        if (ship.canShoot())
-        {
-            b1 = new Bullet(ship);
-            // numFired = ship.getNumFired();
-            // switch (numFired) {
-            //     case 1:
-            //         b1 = new Bullet(ship);
-            //         break;
-            //     case 2:
-            //         b2 = new Bullet(ship);
-            //         break;
-            //     case 3:
-            //         b3 = new Bullet(ship);
-            //     case 4:
-            //         ship.setNumFired(1);
-            //         break;
-            // }
-            
-        }
+        if (ship.canShoot()) b1 = new Bullet(ship);
 
-        if (ship.firing())
-        {
-            b1.update();
-            // switch (numFired) {
-            //     case 1:
-            //         b1.update();
-            //         break;
-            //     case 2:
-            //         b2.update();
-            //         break;
-            //     case 3:
-            //         b3.update();
-            //         break;
-            // }
-            
-        }
+        //only update the bullet if the ship has fired.
+        if (ship.firing()) b1.update();
   
-        a1.update();
-        a2.update();
-        a3.update();
-        a4.update();
-        a5.update();
-        a6.update();
-        a7.update();
+        //update small asteroids
+        for(int i = 0; i < smallAs.length; i++)
+        {
+            smallAs[i].update();
+        }
 
-        a8.update();
-        a9.update();
-        a10.update();
-        a11.update();
-        a12.update();
+        //update medium asteroids
+        for (int i = 0; i < medAs.length; i++)
+        {
+            medAs[i].update();
+        }
 
-        a13.update();
-        a14.update();
-        a15.update();
-        a16.update();
-        a17.update();
-
+        //update large asteroids
+        for (int i = 0; i < lrgAs.length; i++)
+        {
+            lrgAs[i].update();
+        }
 
         checkCollisions();
- 
     }
     
     
@@ -191,7 +111,7 @@ public class AsteroidsGame implements Playable
     private void checkCollisions()
     {
 
-        if (ship.hit(a1, a2, a3, a4, a5, a6, a7) || ship.hit(a8, a9, a10, a11, a12) || ship.hit(a13, a14, a15, a16, a17))
+        if (ship.hit(smallAs) || ship.hit(medAs) || ship.hit(lrgAs))
         {
             if (!ship.hasLives())
             {
