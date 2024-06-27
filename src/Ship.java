@@ -36,57 +36,62 @@ public class Ship extends Collisions
     @Override
     public void draw() {
 
-        StdDraw.setPenRadius(0.002);
-        StdDraw.setPenColor(StdDraw.WHITE);
-        GameUtils.drawPoseAsTriangle(pose, WIDTH, HEIGHT);
+        if (hasLives())
+        {
+            StdDraw.setPenRadius(0.002);
+            StdDraw.setPenColor(StdDraw.WHITE);
+            GameUtils.drawPoseAsTriangle(pose, WIDTH, HEIGHT);
+        }
     }
 
     @Override
     public void update() {
-        
-        if (getLives() < 1) this.hasLives = false;
-
-        this.canShoot = false;
-
-        if (StdDraw.isKeyPressed(java.awt.event.KeyEvent.VK_LEFT))
+        if (hasLives())
         {
-            setPose(pose.newHeading(pose.getHeading() + 0.1));
-        }
-
-        if (StdDraw.isKeyPressed(java.awt.event.KeyEvent.VK_RIGHT))
-        {
-            setPose(pose.newHeading(pose.getHeading() - 0.1));
-        }
-
-        
-        if (StdDraw.isKeyPressed(java.awt.event.KeyEvent.VK_UP))
-        {            
-            setVelocity(new Vector2D(pose.getHeading(), getSpeed()));
-            setPose(pose.move(velocity));
-            setX(getPose().getX());
-            setY(getPose().getY());
-        } else 
-        {
-            setVelocity(velocity.newMagnitude(velocity.getMagnitude() * 0.99));
-            setPose(pose.move(velocity));
-            setX(getPose().getX());
-            setY(getPose().getY());
-        }
-        
-        if (StdDraw.hasNextKeyTyped())
-        {
-            char key = StdDraw.nextKeyTyped();
-
-            if (key == ' ')
+            if (getLives() < 1) this.hasLives = false;
+    
+            this.canShoot = false;
+    
+            if (StdDraw.isKeyPressed(java.awt.event.KeyEvent.VK_LEFT))
             {
-                this.canShoot = true;
-                this.firing = true;
-                addFired();
+                setPose(pose.newHeading(pose.getHeading() + 0.1));
             }
-        }
+    
+            if (StdDraw.isKeyPressed(java.awt.event.KeyEvent.VK_RIGHT))
+            {
+                setPose(pose.newHeading(pose.getHeading() - 0.1));
+            }
+    
+            
+            if (StdDraw.isKeyPressed(java.awt.event.KeyEvent.VK_UP))
+            {            
+                setVelocity(new Vector2D(pose.getHeading(), getSpeed()));
+                setPose(pose.move(velocity));
+                setX(getPose().getX());
+                setY(getPose().getY());
+            } else 
+            {
+                setVelocity(velocity.newMagnitude(velocity.getMagnitude() * 0.99));
+                setPose(pose.move(velocity));
+                setX(getPose().getX());
+                setY(getPose().getY());
+            }
+            
+            if (StdDraw.hasNextKeyTyped())
+            {
+                char key = StdDraw.nextKeyTyped();
+    
+                if (key == ' ')
+                {
+                    this.canShoot = true;
+                    this.firing = true;
+                    addFired();
+                }
+            }
+    
+            this.checkOffscreen();
 
-        
-        this.checkOffscreen();
+        }
 
     }
 

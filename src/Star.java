@@ -1,5 +1,9 @@
 package src;
 
+/**
+ * An enumeration of stars: drawn objects in the background of the asteroids game.
+ * @author wellswa
+ */
 public enum Star
 {
     SMALL(5),

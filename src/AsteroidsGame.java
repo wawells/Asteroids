@@ -1,5 +1,9 @@
 package src;
 
+/**
+ * A class to create a game of asteroids.
+ * @author wellswa
+ */
 public class AsteroidsGame implements Playable
 {
 
@@ -88,7 +92,6 @@ public class AsteroidsGame implements Playable
             
         }
 
-
     }
     
     /**
@@ -164,20 +167,24 @@ public class AsteroidsGame implements Playable
     }
     
     
-    
+    /**
+     * Determines if the ship has collided with any asteroids or saucers. If so, destroys and respawns ship.
+     */
     private void checkCollisions()
     {
 
         if (ship.hit(a1, a2, a3, a4, a5, a6, a7) || ship.hit(a8, a9, a10, a11, a12) || ship.hit(a13, a14, a15, a16, a17))
         {
-            if (ship.hasLives())
+            if (!ship.hasLives())
+            {
+                ship.destroy();
+
+            } else
             {
                 int lives = ship.getLives();
                 System.out.println("Reducing Lives by one: " + lives);
                 ship = new Ship(lives - 1);
-            } else
-            {
-                ship.destroy();
+                System.out.println("New Lives: " + ship.getLives());
             }
         }
     }

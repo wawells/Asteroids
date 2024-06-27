@@ -1,10 +1,17 @@
 package src;
 
+/**
+ * A class to represent a large asteroid.
+ * @author wellswa
+ */
 public class LargeAsteroid extends Collisions implements Asteroid 
 {
 
     public static int RADIUS = 40;
 
+    /**
+     * Default constructor to create a large asteroid at a random location in the game.
+     */
     public LargeAsteroid()
     {
 
@@ -37,6 +44,9 @@ public class LargeAsteroid extends Collisions implements Asteroid
         
     }
 
+    /**
+     * Gets the radius of the asteroid.
+     */
     @Override
     public int getRadius() 
     {
@@ -45,6 +55,10 @@ public class LargeAsteroid extends Collisions implements Asteroid
     }
 
 
+    /**
+     * Generates a random heading in the range of 0 and 2 radians multiplied by pi.
+     * @return double random heading
+     */
     @Override
     public double getHeading() 
     {
@@ -52,10 +66,15 @@ public class LargeAsteroid extends Collisions implements Asteroid
 
     }
 
-    public boolean collided(Collisions other)
-    {
-        return getXPos() == other.getXPos() && getYPos() == other.getYPos();
-    }
+    // /**
+    //  * Determines if this object has the same coordinates as another.
+    //  * @param other the other collidable object with x and y coordiates to check.
+    //  * @return true if this has collided with other.
+    //  */
+    // public boolean collided(Collisions other)
+    // {
+    //     return getXPos() == other.getXPos() && getYPos() == other.getYPos();
+    // }
 
     @Override
     public void destroy()

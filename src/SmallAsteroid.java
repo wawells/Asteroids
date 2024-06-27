@@ -42,6 +42,10 @@ public class SmallAsteroid extends Collisions implements Asteroid
         return RADIUS;
     }
     
+    /**
+     * Generates a random heading in the range of 0 and 2 radians multiplied by pi.
+     * @return double random heading
+     */
     @Override
     public double getHeading()
     {
@@ -50,10 +54,10 @@ public class SmallAsteroid extends Collisions implements Asteroid
 
 
 
-    public boolean collided(Collisions other)
-    {
-        return getPose().equals(other.getPose());
-    }
+    // public boolean collided(Collisions other)
+    // {
+    //     return getPose().equals(other.getPose());
+    // }
     
     @Override
     public void destroy()

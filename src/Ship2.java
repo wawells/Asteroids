@@ -1,5 +1,9 @@
 package src;
 
+/**
+ * A class experimenting with extending a Pose object to further reduce code duplication. No longer in use.
+ * @author wellswa
+ */
 public class Ship2 extends Destructible implements Playable
 {
 

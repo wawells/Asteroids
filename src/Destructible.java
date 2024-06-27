@@ -1,5 +1,9 @@
 package src;
 
+/**
+ * A class experimenting with a child of a Pose object to reduce code duplication. No longer in use.
+ * @author wellswa
+ */
 public class Destructible extends Pose {
 
     protected int lives;
