@@ -1,9 +1,12 @@
 package src;
 
+import java.util.ArrayList;
+
 public class SmallAsteroid extends Collisions implements Asteroid 
 {
 
     public static int RADIUS = 10;
+    private boolean isAlive;
 
     public SmallAsteroid()
     {
@@ -15,6 +18,7 @@ public class SmallAsteroid extends Collisions implements Asteroid
         setVelocity(new Vector2D(this.pose.getHeading(), getSpeed()));
 
         setPoints(200);
+        this.isAlive = true;
     }
 
 
@@ -22,24 +26,35 @@ public class SmallAsteroid extends Collisions implements Asteroid
     @Override
     public void draw() 
     {
-        StdDraw.setPenRadius(0.002);
-        StdDraw.circle(getXPos(), getYPos(), getRadius());
+        if (isAlive())
+        {
+            StdDraw.setPenRadius(0.002);
+            StdDraw.circle(getXPos(), getYPos(), getRadius());
+        }
     }
     
     @Override
     public void update() 
     {
-        setPose(pose.move(velocity));
-        setX(getPose().getX());
-        setY(getPose().getY());
-        
-        this.checkOffscreen();
+        if (isAlive())
+        {
+            setPose(pose.move(velocity));
+            setX(getPose().getX());
+            setY(getPose().getY());
+            
+            this.checkOffscreen();
+        }
     }
 
     @Override
     public int getRadius() 
     {
         return RADIUS;
+    }
+
+    public boolean isAlive()
+    {
+        return this.isAlive;
     }
 
     /**
@@ -66,13 +81,13 @@ public class SmallAsteroid extends Collisions implements Asteroid
      * @param num the number of small asteroids to create
      * @return an array of type SmallAsteroid
      */
-    public static SmallAsteroid[] getAsteroids(int num)
+    public static ArrayList<SmallAsteroid> getAsteroids(int num)
     {
-        SmallAsteroid[] smls = new SmallAsteroid[num];
+        ArrayList<SmallAsteroid> smls = new ArrayList<>();
 
-        for (int i = 0; i < smls.length; i++)
+        for (int i = 0; i < num; i++)
         {
-            smls[i] = new SmallAsteroid();
+            smls.add(new SmallAsteroid());
         }
 
         return smls;
@@ -81,6 +96,6 @@ public class SmallAsteroid extends Collisions implements Asteroid
     @Override
     public void destroy()
     {
-        System.out.println("destroying small");
+        this.isAlive = false;
     }
 }

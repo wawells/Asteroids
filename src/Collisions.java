@@ -13,7 +13,7 @@ public abstract class Collisions implements Playable
     protected double speed;
     protected Pose pose;
     protected Vector2D velocity;
-
+    
     /**
      * Gets the x coordinate of the object.
      * @return double x coordinate

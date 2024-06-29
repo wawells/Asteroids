@@ -1,9 +1,12 @@
 package src;
 
+import java.util.ArrayList;
+
 public class MediumAsteroid extends Collisions implements Asteroid 
 {
 
     public static int RADIUS = 25;
+    private boolean isAlive;
 
     public MediumAsteroid()
     {
@@ -14,31 +17,43 @@ public class MediumAsteroid extends Collisions implements Asteroid
         //the heading of a circle shouldn't matter... Right guys?
         setPose(new Pose(getXPos(), getYPos(), getHeading()));
         setVelocity(new Vector2D(getHeading(), getSpeed()));
+        this.isAlive = true;
     }
 
 
     @Override
     public void update() 
     {
-        setPose(pose.move(velocity));
-        setX(getPose().getX());
-        setY(getPose().getY());
+        if (isAlive())
+        {
+            setPose(pose.move(velocity));
+            setX(getPose().getX());
+            setY(getPose().getY());
 
-        this.checkOffscreen();
+            this.checkOffscreen();
+        }
 
     }
 
     @Override
     public void draw() 
     {
-        StdDraw.setPenRadius(0.002);
-        StdDraw.circle(getXPos(), getYPos(), getRadius());
+        if (isAlive())
+        {
+            StdDraw.setPenRadius(0.002);
+            StdDraw.circle(getXPos(), getYPos(), getRadius());
+        }
     }
 
     @Override
     public int getRadius() 
     {
         return RADIUS;
+    }
+
+    public boolean isAlive()
+    {
+        return this.isAlive;
     }
 
     /**
@@ -65,13 +80,13 @@ public class MediumAsteroid extends Collisions implements Asteroid
      * @param num the number of MediumAsteroid to create
      * @return an array of type MediumAsteroid
      */
-    public static MediumAsteroid[] getAsteroids(int num)
+    public static ArrayList<MediumAsteroid> getAsteroids(int num)
     {
-        MediumAsteroid[] mdms = new MediumAsteroid[num];
+        ArrayList<MediumAsteroid> mdms = new ArrayList<>();
 
-        for (int i = 0; i < mdms.length; i++)
+        for (int i = 0; i < num; i++)
         {
-            mdms[i] = new MediumAsteroid();
+            mdms.add(new MediumAsteroid());
         }
 
         return mdms;
@@ -80,7 +95,7 @@ public class MediumAsteroid extends Collisions implements Asteroid
     @Override
     public void destroy()
     {
-        System.out.println("destroying med");
+        this.isAlive = false;
 
     }
 

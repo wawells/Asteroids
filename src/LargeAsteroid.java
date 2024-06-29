@@ -1,5 +1,7 @@
 package src;
 
+import java.util.ArrayList;
+
 /**
  * A class to represent a large asteroid.
  * @author wellswa
@@ -8,6 +10,7 @@ public class LargeAsteroid extends Collisions implements Asteroid
 {
 
     public static int RADIUS = 40;
+    private boolean isAlive;
 
     /**
      * Default constructor to create a large asteroid at a random location in the game.
@@ -22,25 +25,32 @@ public class LargeAsteroid extends Collisions implements Asteroid
         //the heading of a circle shouldn't matter... Right guys?
         setPose(new Pose(getXPos(), getYPos(), getHeading()));
         setVelocity(new Vector2D(getHeading(), getSpeed()));
+        this.isAlive = true;
     }
 
     
     @Override
     public void update() 
     {
-        setPose(pose.move(velocity));
-        setX(getPose().getX());
-        setY(getPose().getY());
-        
-        this.checkOffscreen();
+        if (isAlive())
+        {
+            setPose(pose.move(velocity));
+            setX(getPose().getX());
+            setY(getPose().getY());
+            
+            this.checkOffscreen();
+        }
 
     }
 
     @Override
     public void draw() 
     {
-        StdDraw.setPenRadius(0.002);
-        StdDraw.circle(getXPos(), getYPos(), getRadius());
+        if (isAlive())
+        {
+            StdDraw.setPenRadius(0.002);
+            StdDraw.circle(getXPos(), getYPos(), getRadius());
+        }
         
     }
 
@@ -52,6 +62,11 @@ public class LargeAsteroid extends Collisions implements Asteroid
     {
         return RADIUS;
 
+    }
+
+    public boolean isAlive()
+    {
+        return this.isAlive;
     }
 
 
@@ -79,13 +94,13 @@ public class LargeAsteroid extends Collisions implements Asteroid
      * @param num the number of LargeAsteroid to create
      * @return an array of type LargeAsteroid
      */
-    public static LargeAsteroid[] getAsteroids(int num)
+    public static ArrayList<LargeAsteroid> getAsteroids(int num)
     {
-        LargeAsteroid[] lrgs = new LargeAsteroid[num];
+        ArrayList<LargeAsteroid> lrgs = new ArrayList<>();
 
-        for (int i = 0; i < lrgs.length; i++)
+        for (int i = 0; i < num; i++)
         {
-            lrgs[i] = new LargeAsteroid();
+            lrgs.add(new LargeAsteroid());
         }
 
         return lrgs;
@@ -94,8 +109,7 @@ public class LargeAsteroid extends Collisions implements Asteroid
     @Override
     public void destroy()
     {
-        System.out.println("destroying lrg");
-
+        this.isAlive = false;
     }
     
 }

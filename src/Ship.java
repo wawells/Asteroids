@@ -57,9 +57,9 @@ public class Ship extends Collisions
 
     @Override
     public void update() {
+        
         if (isAlive())
         {
-    
             this.canShoot = false;
     
             if (StdDraw.isKeyPressed(java.awt.event.KeyEvent.VK_LEFT))
@@ -199,11 +199,11 @@ public class Ship extends Collisions
             for (int i = 0; i < sml.length && !hit; i++)
             {
                 index = i;
-                hit = hasCollided(sml[i], SmallAsteroid.RADIUS);
+                if (sml[i].isAlive()) hit = hasCollided(sml[i], SmallAsteroid.RADIUS);
             }
         } else if (sml.length == 1)
         {
-            hit = hasCollided(sml[0], SmallAsteroid.RADIUS);
+            if (sml[0].isAlive()) hit = hasCollided(sml[0], SmallAsteroid.RADIUS);
         }
 
         if (!hit) index = -1;
@@ -225,11 +225,11 @@ public class Ship extends Collisions
             for (int i = 0; i < med.length && !hit; i++)
             {
                 index = i;
-                hit = hasCollided(med[i], MediumAsteroid.RADIUS);
+                if (med[i].isAlive()) hit = hasCollided(med[i], SmallAsteroid.RADIUS);
             }
         } else if (med.length == 1)
         {
-            hit = hasCollided(med[0], MediumAsteroid.RADIUS);
+            if (med[0].isAlive()) hit = hasCollided(med[0], SmallAsteroid.RADIUS);
         }
 
         if (!hit) index = -1;
@@ -251,11 +251,11 @@ public class Ship extends Collisions
             for (int i = 0; i < lrg.length && !hit; i++)
             {
                 index = i;
-                hit = hasCollided(lrg[i], LargeAsteroid.RADIUS);
+                if (lrg[i].isAlive()) hit = hasCollided(lrg[i], SmallAsteroid.RADIUS);
             }
         } else if (lrg.length == 1)
         {
-            hit = hasCollided(lrg[0], LargeAsteroid.RADIUS);
+            if (lrg[0].isAlive()) hit = hasCollided(lrg[0], SmallAsteroid.RADIUS);
         }
 
         if (!hit) index = -1;

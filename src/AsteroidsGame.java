@@ -1,4 +1,5 @@
 package src;
+import java.util.ArrayList;
 
 /**
  * A class to create a game of asteroids.
@@ -9,11 +10,12 @@ public class AsteroidsGame implements Playable
     private Ship ship;
 
     private Star[] stars;
-    private SmallAsteroid[] smallAs;
-    private MediumAsteroid[] medAs;
-    private LargeAsteroid[] lrgAs;
+    private ArrayList<SmallAsteroid> smallAs;
+    private ArrayList<MediumAsteroid> medAs;
+    private ArrayList<LargeAsteroid> lrgAs;
 
     private Bullet b1;
+    private int score;
 
 
     public AsteroidsGame()
@@ -28,6 +30,8 @@ public class AsteroidsGame implements Playable
         smallAs = SmallAsteroid.getAsteroids(5);
         medAs = MediumAsteroid.getAsteroids(5);
         lrgAs = LargeAsteroid.getAsteroids(5);
+
+        this.score = 0;
     }
 
     
@@ -46,21 +50,21 @@ public class AsteroidsGame implements Playable
         ship.draw();
 
         //draw small asteroids
-        for (int i = 0; i < smallAs.length; i++)
+        for (int i = 0; i < smallAs.size(); i++)
         {
-            smallAs[i].draw();
+            smallAs.get(i).draw();
         }
 
         //draw medium asteroids
-        for (int i = 0; i < medAs.length; i++)
+        for (int i = 0; i < medAs.size(); i++)
         {
-            medAs[i].draw();
+            medAs.get(i).draw();
         }
 
         //draw large asteroids
-        for (int i = 0; i < lrgAs.length; i++)
+        for (int i = 0; i < lrgAs.size(); i++)
         {
-            lrgAs[i].draw();
+            lrgAs.get(i).draw();
         }
         
 
@@ -84,61 +88,86 @@ public class AsteroidsGame implements Playable
         if (ship.firing()) b1.update();
   
         //update small asteroids
-        for(int i = 0; i < smallAs.length; i++)
+        for(int i = 0; i < smallAs.size(); i++)
         {
-            smallAs[i].update();
+            smallAs.get(i).update();
         }
 
         //update medium asteroids
-        for (int i = 0; i < medAs.length; i++)
+        for (int i = 0; i < medAs.size(); i++)
         {
-            medAs[i].update();
+            medAs.get(i).update();
         }
 
         //update large asteroids
-        for (int i = 0; i < lrgAs.length; i++)
+        for (int i = 0; i < lrgAs.size(); i++)
         {
-            lrgAs[i].update();
+            lrgAs.get(i).update();
         }
 
-        checkCollisions();
+        checkShipCollisions();
+        if (ship.firing()) checkBulletCollisions();
     }
     
     
     /**
      * Determines if the ship has collided with any asteroids or saucers. If so, destroys and respawns ship.
      */
-    private void checkCollisions()
+    private void checkShipCollisions()
     {
         //check for ship collisions with all asteroids
-        int size = -1;
-        int smlHit = ship.hit(smallAs);
-        int medHit = ship.hit(medAs);
-        int lrgHit = ship.hit(lrgAs);
+        int coll = -1;
+        int smlHit = ship.hit((SmallAsteroid[])smallAs.toArray());
+        int medHit = ship.hit((MediumAsteroid[])medAs.toArray());
+        int lrgHit = ship.hit((LargeAsteroid[])lrgAs.toArray());
 
         //determine what size asteroid was hit
-        if (smlHit > -1) size = 0;
-        if (medHit > -1) size = 1;
-        if (lrgHit > -1) size = 2;
+        if (smlHit > -1) coll = 0;
+        if (medHit > -1) coll = 1;
+        if (lrgHit > -1) coll = 2;
 
-        if (size != -1) //check for any collision
+        if (coll != -1) //check for any collision
         {
             //either decrement lives and respawn or destroy the ship and end the game.
             if (ship.isAlive())
             {
                 int lives = ship.getLives();
                 ship = new Ship(lives - 1);
-            } else
-            {
-                ship.destroy();
             }
 
             //destroy the asteroid that collided
-            if (size == 0) smallAs[smlHit].destroy();
-            else if (size == 1) medAs[medHit].destroy();
-            else if (size == 2) lrgAs[lrgHit].destroy();
+            if (coll == 0) smallAs.get(smlHit).destroy();
+            else if (coll == 1) medAs.get(medHit).destroy();
+            else if (coll == 2) lrgAs.get(lrgHit).destroy();
         }
     }
+
+
+    private void checkBulletCollisions()
+    {
+        //check for bullet collisions with all asteroids
+        int coll = -1;
+        int smlHit = ship.hit((SmallAsteroid[])smallAs.toArray());
+        int medHit = ship.hit((MediumAsteroid[])medAs.toArray());
+        int lrgHit = ship.hit((LargeAsteroid[])lrgAs.toArray());
+
+        //determine what size asteroid was hit
+        if (smlHit > -1) coll = 0;
+        if (medHit > -1) coll = 1;
+        if (lrgHit > -1) coll = 2;
+
+        if (coll != -1) //check for any collision
+        {
+            b1.destroy();
+            //destroy the asteroid that collided
+            if (coll == 0) smallAs.get(smlHit).destroy();
+            else if (coll == 1) medAs.get(medHit).destroy();
+            else if (coll == 2) lrgAs.get(lrgHit).destroy();
+        }
+    }
+
+
+    //TODO manually convert arraylists to arrays, or change the methods, and update the array objects upon collisions
     
 }
 
