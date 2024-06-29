@@ -67,6 +67,14 @@ public class LargeAsteroid extends Collisions implements Asteroid
     }
 
     /**
+     * Returns a new instance of a large asteroid. Used when an asteroid has collided with another unit.
+     */
+    public LargeAsteroid respawn()
+    {
+        return new LargeAsteroid();
+    }
+
+    /**
      * Generates and returns an array of LargeAsteroid of size num.
      * @param num the number of LargeAsteroid to create
      * @return an array of type LargeAsteroid
@@ -86,7 +94,8 @@ public class LargeAsteroid extends Collisions implements Asteroid
     @Override
     public void destroy()
     {
-        
+        System.out.println("destroying lrg");
+
     }
     
 }

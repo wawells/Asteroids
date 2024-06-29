@@ -64,7 +64,7 @@ public class AsteroidsGame implements Playable
         }
         
 
-        //only draw the bullet if the ship has fired.
+        //only draw the bullet if the ship has fired
         if (ship.firing()) b1.draw();
 
     }
@@ -110,18 +110,33 @@ public class AsteroidsGame implements Playable
      */
     private void checkCollisions()
     {
+        //check for ship collisions with all asteroids
+        int size = -1;
+        int smlHit = ship.hit(smallAs);
+        int medHit = ship.hit(medAs);
+        int lrgHit = ship.hit(lrgAs);
 
-        if (ship.hit(smallAs) || ship.hit(medAs) || ship.hit(lrgAs))
+        //determine what size asteroid was hit
+        if (smlHit > -1) size = 0;
+        if (medHit > -1) size = 1;
+        if (lrgHit > -1) size = 2;
+
+        if (size != -1) //check for any collision
         {
-            if (!ship.hasLives())
-            {
-                ship.destroy();
-
-            } else
+            //either decrement lives and respawn or destroy the ship and end the game.
+            if (ship.isAlive())
             {
                 int lives = ship.getLives();
                 ship = new Ship(lives - 1);
+            } else
+            {
+                ship.destroy();
             }
+
+            //destroy the asteroid that collided
+            if (size == 0) smallAs[smlHit].destroy();
+            else if (size == 1) medAs[medHit].destroy();
+            else if (size == 2) lrgAs[lrgHit].destroy();
         }
     }
     

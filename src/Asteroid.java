@@ -10,4 +10,6 @@ public interface Asteroid extends Playable
 
   public double getHeading();
 
+  public Asteroid respawn();
+
 }

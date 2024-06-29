@@ -133,7 +133,6 @@ public abstract class Collisions implements Playable
         this.speed = value;
     } 
 
-
     /**
      * Sets the pose of the object.
      * @param pose the pose for the direction and xy position
@@ -153,8 +152,6 @@ public abstract class Collisions implements Playable
     }
 
     public abstract void destroy();
-
-
 
     /**
      * Determines if the pose object is off of the screen and wraps to the appropriate side.

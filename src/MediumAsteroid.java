@@ -53,6 +53,14 @@ public class MediumAsteroid extends Collisions implements Asteroid
     }
 
     /**
+     * Returns a new instance of the medium asteroid.
+     */
+    public MediumAsteroid respawn()
+    {
+        return new MediumAsteroid();
+    }
+
+    /**
      * Generates and returns an array of MediumAsteroid of size num.
      * @param num the number of MediumAsteroid to create
      * @return an array of type MediumAsteroid
@@ -72,7 +80,8 @@ public class MediumAsteroid extends Collisions implements Asteroid
     @Override
     public void destroy()
     {
-        
+        System.out.println("destroying med");
+
     }
 
 

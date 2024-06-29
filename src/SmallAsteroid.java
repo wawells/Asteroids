@@ -41,6 +41,15 @@ public class SmallAsteroid extends Collisions implements Asteroid
     {
         return RADIUS;
     }
+
+    /**
+     * Returns a new instance of a small asteroid.
+     * @return SmallAsteroid at random location
+     */
+    public SmallAsteroid respawn()
+    {
+        return new SmallAsteroid();
+    }
     
     /**
      * Generates a random heading in the range of 0 and 2 radians multiplied by pi.
@@ -68,17 +77,10 @@ public class SmallAsteroid extends Collisions implements Asteroid
 
         return smls;
     }
-
-
-
-    // public boolean collided(Collisions other)
-    // {
-    //     return getPose().equals(other.getPose());
-    // }
     
     @Override
     public void destroy()
     {
-        
+        System.out.println("destroying small");
     }
 }
