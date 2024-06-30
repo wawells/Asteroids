@@ -4,12 +4,9 @@ package src;
  * An class to represent a star: drawn objects in the background of the asteroids game.
  * @author wellswa
  */
-public class Star
+public class Star extends Stationary
 {
     private final int radius = 1;
-
-    private double xPos;
-    private double yPos;
 
     /**
      * Default constructor creating a new star at random x and y coordinates.
@@ -26,8 +23,7 @@ public class Star
      */
     public Star(double x, double y)
     {
-        this.xPos = x;
-        this.yPos = y;
+        super(x, y);
     }
 
     /**
@@ -37,24 +33,6 @@ public class Star
     private int getRadius()
     {
         return this.radius;
-    }
-
-    /**
-     * Gets the x coordinate of the star.
-     * @return double x coordinate
-     */
-    public double getX()
-    {
-        return this.xPos;
-    }
-
-    /**
-     * Gets the y coordinate of the star.
-     * @return double y coordinate
-     */
-    public double getY()
-    {
-        return this.yPos;
     }
 
     /**

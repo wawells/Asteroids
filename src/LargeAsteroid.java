@@ -6,10 +6,10 @@ import java.util.ArrayList;
  * A class to represent a large asteroid.
  * @author wellswa
  */
-public class LargeAsteroid extends Collisions implements Asteroid 
+public class LargeAsteroid extends Asteroid 
 {
-
-    public static int RADIUS = 40;
+    public static final int POINTS = 50;
+    public static final int RADIUS = 40;
     private boolean isAlive;
 
     /**
@@ -20,9 +20,9 @@ public class LargeAsteroid extends Collisions implements Asteroid
 
         setX(GameDriver.GENERATOR.nextDouble(0, GameDriver.SCREEN_WIDTH));
         setY(GameDriver.GENERATOR.nextDouble(0, GameDriver.SCREEN_HEIGHT));
-        setPoints(200);
+        setPoints(POINTS);
         setSpeed(1.0);
-        //the heading of a circle shouldn't matter... Right guys?
+        setRadius(40);
         setPose(new Pose(getXPos(), getYPos(), getHeading()));
         setVelocity(new Vector2D(getHeading(), getSpeed()));
         this.isAlive = true;
@@ -38,7 +38,7 @@ public class LargeAsteroid extends Collisions implements Asteroid
             setX(getPose().getX());
             setY(getPose().getY());
             
-            this.checkOffscreen();
+            this.wrapScreen();
         }
 
     }
@@ -54,31 +54,9 @@ public class LargeAsteroid extends Collisions implements Asteroid
         
     }
 
-    /**
-     * Gets the radius of the asteroid.
-     */
-    @Override
-    public int getRadius() 
-    {
-        return RADIUS;
-
-    }
-
     public boolean isAlive()
     {
         return this.isAlive;
-    }
-
-
-    /**
-     * Generates a random heading in the range of 0 and 2 radians multiplied by pi.
-     * @return double random heading
-     */
-    @Override
-    public double getHeading() 
-    {
-        return GameDriver.GENERATOR.nextDouble(0, 2 * Math.PI);
-
     }
 
     /**

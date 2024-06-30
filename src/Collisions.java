@@ -9,7 +9,7 @@ public abstract class Collisions implements Playable
     protected double xPosition;
     protected double yPosition;
     protected int lives;
-    protected int points;
+    protected double points;
     protected double speed;
     protected Pose pose;
     protected Vector2D velocity;
@@ -45,7 +45,7 @@ public abstract class Collisions implements Playable
      * Gets the point value of the object.
      * @return int number of points
      */
-    public int getPoints()
+    public double getPoints()
     {
         return this.points;
     }
@@ -119,7 +119,7 @@ public abstract class Collisions implements Playable
      * Sets the point value of the object.
      * @param value the point value associated with the collidable object
      */
-    public void setPoints(int value)
+    public void setPoints(double value)
     {
         this.points = value;
     }
@@ -156,7 +156,7 @@ public abstract class Collisions implements Playable
     /**
      * Determines if the pose object is off of the screen and wraps to the appropriate side.
      */
-    public void checkOffscreen()
+    public void wrapScreen()
     {
         if (pose.getX() > GameDriver.SCREEN_WIDTH)
         {
@@ -182,5 +182,11 @@ public abstract class Collisions implements Playable
             setY(GameDriver.SCREEN_HEIGHT - 1);
             pose = pose.newY(getYPos());
         }
+    }
+
+    public boolean offScreen()
+    {
+        return pose.getX() > GameDriver.SCREEN_WIDTH || pose.getX() < 1
+            || pose.getY() > GameDriver.SCREEN_HEIGHT || pose.getY() < 1;
     }
 }

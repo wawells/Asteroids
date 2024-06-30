@@ -36,7 +36,8 @@ Bullets (filled circles; radius: 1.5px)
 
 
 
--perform approximate collision detection by associating each game element with an appropriate collision radius. For the case of the circular elements (Asteroids and Bullets) this should match the radius of the element. For the case of non-circular objects (Ship and Saucers) this radius should be chosen to be half the length of the longest axis of the element. For example, the ship's longest axis is 20 pixels, so the collision radius should be 10 pixels. A collision should occur whenever two objects are near enough that the circles defined by their collision radii overlap. 
+-perform approximate collision detection by associating each game element with an appropriate collision radius. For the case of the circular elements (Asteroids and Bullets) this should match the radius of the element. 
+For the case of non-circular objects (Ship and Saucers) this radius should be chosen to be half the length of the longest axis of the element. For example, the ship's longest axis is 20 pixels, so the collision radius should be 10 pixels. A collision should occur whenever two objects are near enough that the circles defined by their collision radii overlap. 
 -Whenever a collision occurs, both elements involved in the collision must be destroyed and removed from the screen
 
 Background:

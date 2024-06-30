@@ -1,5 +1,7 @@
 package src;
 
+import java.util.ArrayList;
+
 /**
  * A class representing a ship in the game Asteroids.
  * @author wellswa
@@ -32,7 +34,7 @@ public class Ship extends Collisions
     {
         setX(GameDriver.SCREEN_WIDTH/2);
         setY(GameDriver.SCREEN_HEIGHT/2);
-        setSpeed(2.0);
+        setSpeed(1.0);
         setPose(new Pose(getXPos(), getYPos(), INIT_HEADING));
         setVelocity(new Vector2D(this.pose.getHeading(), 0));
         
@@ -99,7 +101,7 @@ public class Ship extends Collisions
                 }
             }
     
-            this.checkOffscreen();
+            this.wrapScreen();
 
         }
 
@@ -180,30 +182,27 @@ public class Ship extends Collisions
     @Override
     public void destroy()
     {
-        System.out.println("Destroying the ship");
+        System.out.println("Destroying the ship"); //TODO unused
     }
 
 
     /**
-     * Determines if the ship has collided with any small asteroid.
-     * @param sml at least one SmallAsteroid to check for collision
+     * Determines if the ship has collided with any asteroids.
+     * @param aList list of asteroids to check
      * @return int index of the asteroid that has collided with the ship, or -1 if no collision detected
      */
-    public int hit (SmallAsteroid... sml)
+    public int hit (ArrayList<? extends Asteroid> aList)
     {
         int index = 0;
         boolean hit = false;
 
-        if (sml.length > 1)
+        if (aList.size() > 0)
         {
-            for (int i = 0; i < sml.length && !hit; i++)
+            for (int i = 0; i < aList.size() && !hit; i++)
             {
                 index = i;
-                if (sml[i].isAlive()) hit = hasCollided(sml[i], SmallAsteroid.RADIUS);
+                hit = hasCollided(aList.get(i), aList.get(i).getRadius());
             }
-        } else if (sml.length == 1)
-        {
-            if (sml[0].isAlive()) hit = hasCollided(sml[0], SmallAsteroid.RADIUS);
         }
 
         if (!hit) index = -1;
@@ -211,61 +210,8 @@ public class Ship extends Collisions
         return index;
     }
 
-    /**
-     * Determines if the ship has collided with any medium asteroid.
-     * @param med at least one MediumAsteroid to check for collision
-     * @return int index of the asteroid that has collided with the ship, or -1 if no collision detected
-     */
-    public int hit(MediumAsteroid... med)
+    public boolean hit (Saucer saucer)
     {
-        int index = 0;
-        boolean hit = false;
-        if (med.length > 1)
-        {
-            for (int i = 0; i < med.length && !hit; i++)
-            {
-                index = i;
-                if (med[i].isAlive()) hit = hasCollided(med[i], SmallAsteroid.RADIUS);
-            }
-        } else if (med.length == 1)
-        {
-            if (med[0].isAlive()) hit = hasCollided(med[0], SmallAsteroid.RADIUS);
-        }
-
-        if (!hit) index = -1;
-        return index;
-
+        return hasCollided(saucer, 10);
     }
-
-    /**
-     * Determines if the ship has collided with any large asteroid.
-     * @param lrg at least one LargeAsteroid to check for collision
-     * @return int index of the asteroid that has collided with the ship, or -1 if no collision detected
-     */
-    public int hit(LargeAsteroid... lrg)
-    {
-        int index = 0;
-        boolean hit = false;
-        if (lrg.length > 1)
-        {
-            for (int i = 0; i < lrg.length && !hit; i++)
-            {
-                index = i;
-                if (lrg[i].isAlive()) hit = hasCollided(lrg[i], SmallAsteroid.RADIUS);
-            }
-        } else if (lrg.length == 1)
-        {
-            if (lrg[0].isAlive()) hit = hasCollided(lrg[0], SmallAsteroid.RADIUS);
-        }
-
-        if (!hit) index = -1;
-
-        return index;
-
-    }
-
-    
-
-
-
 }

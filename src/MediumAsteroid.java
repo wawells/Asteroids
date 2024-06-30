@@ -2,19 +2,19 @@ package src;
 
 import java.util.ArrayList;
 
-public class MediumAsteroid extends Collisions implements Asteroid 
+public class MediumAsteroid extends Asteroid
 {
-
-    public static int RADIUS = 25;
+    public static final int POINTS = 100;
+    public static final int RADIUS = 25;
     private boolean isAlive;
 
     public MediumAsteroid()
     {
         setX(GameDriver.GENERATOR.nextDouble(0, GameDriver.SCREEN_WIDTH));
         setY(GameDriver.GENERATOR.nextDouble(0, GameDriver.SCREEN_HEIGHT));
-        setPoints(200);
+        setPoints(POINTS);
         setSpeed(1.0);
-        //the heading of a circle shouldn't matter... Right guys?
+        setRadius(25);
         setPose(new Pose(getXPos(), getYPos(), getHeading()));
         setVelocity(new Vector2D(getHeading(), getSpeed()));
         this.isAlive = true;
@@ -30,7 +30,7 @@ public class MediumAsteroid extends Collisions implements Asteroid
             setX(getPose().getX());
             setY(getPose().getY());
 
-            this.checkOffscreen();
+            this.wrapScreen();
         }
 
     }
@@ -45,26 +45,9 @@ public class MediumAsteroid extends Collisions implements Asteroid
         }
     }
 
-    @Override
-    public int getRadius() 
-    {
-        return RADIUS;
-    }
-
     public boolean isAlive()
     {
         return this.isAlive;
-    }
-
-    /**
-     * Generates a random heading in the range of 0 and 2 radians multiplied by pi.
-     * @return double random heading
-     */
-    @Override
-    public double getHeading() 
-    {
-        return GameDriver.GENERATOR.nextDouble(0, 2 * Math.PI);
-
     }
 
     /**

@@ -1,15 +1,30 @@
 package src;
 
 /**
- * Interface with the methods required for all sizes of asteroids.
+ * Base class to represent an Asteroid of various sizes
  * @author wellswa
  */
-public interface Asteroid extends Playable
+public abstract class Asteroid extends Collisions
 {
-  public int getRadius();
+  protected int radius;
+  
+  protected int getRadius()
+  {
+    return this.radius;
+  }
 
-  public double getHeading();
+  protected void setRadius(int radius)
+  {
+    this.radius = radius;
+  }
 
-  public Asteroid respawn();
+  protected double getHeading()
+  {
+    return GameDriver.GENERATOR.nextDouble(0, 2 * Math.PI);
+  }
+
+  public abstract Asteroid respawn();
+
+
 
 }

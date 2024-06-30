@@ -2,10 +2,10 @@ package src;
 
 import java.util.ArrayList;
 
-public class SmallAsteroid extends Collisions implements Asteroid 
+public class SmallAsteroid extends Asteroid 
 {
-
-    public static int RADIUS = 10;
+    public static final int POINTS = 200;
+    public static final int RADIUS = 10;
     private boolean isAlive;
 
     public SmallAsteroid()
@@ -13,11 +13,11 @@ public class SmallAsteroid extends Collisions implements Asteroid
         this.setX(GameDriver.GENERATOR.nextDouble(20, GameDriver.SCREEN_WIDTH - 20));
         this.setY(GameDriver.GENERATOR.nextDouble(20, GameDriver.SCREEN_HEIGHT - 20));
         setSpeed(1.0);
-        //the heading of a circle shouldn't matter... Right guys?
+        setRadius(10);
         setPose(new Pose(getXPos(), getYPos(), this.getHeading()));
         setVelocity(new Vector2D(this.pose.getHeading(), getSpeed()));
 
-        setPoints(200);
+        setPoints(POINTS);
         this.isAlive = true;
     }
 
@@ -42,14 +42,8 @@ public class SmallAsteroid extends Collisions implements Asteroid
             setX(getPose().getX());
             setY(getPose().getY());
             
-            this.checkOffscreen();
+            this.wrapScreen();
         }
-    }
-
-    @Override
-    public int getRadius() 
-    {
-        return RADIUS;
     }
 
     public boolean isAlive()
@@ -66,16 +60,6 @@ public class SmallAsteroid extends Collisions implements Asteroid
         return new SmallAsteroid();
     }
     
-    /**
-     * Generates a random heading in the range of 0 and 2 radians multiplied by pi.
-     * @return double random heading
-     */
-    @Override
-    public double getHeading()
-    {
-        return GameDriver.GENERATOR.nextDouble(0.5, 2 * Math.PI);
-    }
-
     /**
      * Generates and returns an array of SmallAsteroids of size num.
      * @param num the number of small asteroids to create
