@@ -19,9 +19,14 @@ public class AsteroidsGame implements Playable
 
     private Bullet b1;
 
+    private int initAsts;
+    private int levelCount;
+
 
     public AsteroidsGame()
     {
+        initAsts = 15;
+        levelCount = 1;
 
         //draw the stars
         stars = Star.getStars(100);
@@ -33,9 +38,7 @@ public class AsteroidsGame implements Playable
 
         
         //create Asteroids
-        smlAs = SmallAsteroid.getAsteroids(5);
-        medAs = MediumAsteroid.getAsteroids(5);
-        lrgAs = LargeAsteroid.getAsteroids(5);
+        createAsteroids(initAsts);
 
     }
 
@@ -90,7 +93,17 @@ public class AsteroidsGame implements Playable
     public void update() {
 
         ship.update();
-        
+        double curScore = sBoard.getScore();
+
+        //create more asteroids if reaching target score
+        if (curScore / levelCount > 1000 && Math.round(curScore / 1000) == levelCount) //TODO how to get asteroids to only spawn once every thousand points
+        {
+            initAsts += 9;
+            levelCount++;
+            createAsteroids(initAsts);
+            updateALists();
+        }
+
         //create a saucer with .002 probability if it is not alive
         if (!saucer.isAlive())
         {
@@ -235,6 +248,21 @@ public class AsteroidsGame implements Playable
         {
             if (!lrgAs.get(i).isAlive()) lrgAs.remove(i);
         }
+    }
+
+    /**
+     * Creates equal number of all sizes of asteorids.
+     * @param numAsteroids - int total number of asteroids to create
+     */
+    private void createAsteroids(int numAsteroids)
+    {
+        int numSize = numAsteroids / 3;
+
+        smlAs = SmallAsteroid.getAsteroids(numSize);
+        medAs = MediumAsteroid.getAsteroids(numSize);
+        lrgAs = LargeAsteroid.getAsteroids(numSize);
+
+
     }
     
 }

@@ -20,7 +20,7 @@ public class Saucer extends Collisions
     {
         setX(GameDriver.GENERATOR.nextDouble(0, GameDriver.SCREEN_WIDTH));
         setY(GameDriver.GENERATOR.nextDouble(0, GameDriver.SCREEN_HEIGHT));
-        setSpeed(4.0);
+        setSpeed(3.0);
         setPoints(POINTS);
 
         this.initHeading = randomHeading();

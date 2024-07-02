@@ -33,7 +33,7 @@ public class Scoreboard extends Stationary
      * Getter method for the current score of the scoreboard.
      * @return double - the current score value
      */
-    private double getScore()
+    public double getScore()
     {
         return this.score;
     }
