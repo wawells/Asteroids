@@ -10,10 +10,10 @@ public class MediumAsteroid extends Asteroid
 
     public MediumAsteroid()
     {
-        setX(GameDriver.GENERATOR.nextDouble(0, GameDriver.SCREEN_WIDTH));
-        setY(GameDriver.GENERATOR.nextDouble(0, GameDriver.SCREEN_HEIGHT));
+        setX(GameDriver.getRandomExcludeStart("x"));
+        setY(GameDriver.getRandomExcludeStart("y"));
         setPoints(POINTS);
-        setSpeed(1.0);
+        setSpeed(Asteroid.SPEED);
         setRadius(25);
         setPose(new Pose(getXPos(), getYPos(), getHeading()));
         setVelocity(new Vector2D(getHeading(), getSpeed()));

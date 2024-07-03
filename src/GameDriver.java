@@ -1,5 +1,6 @@
 package src;
 import java.awt.Color;
+import java.awt.geom.GeneralPath;
 import java.util.Random;
 
 /**
@@ -49,5 +50,52 @@ public class GameDriver {
             StdDraw.pause(DRAW_DELAY);
         }
     }
+
+
+        /**
+     * Gets a random double value between two bounds.
+     * @param lBound double - the lower bound
+     * @param uBound double - the upper bound
+     * @return double - the random value
+     */
+    public static double getRandom(double lBound, double uBound)
+    {
+        return GameDriver.GENERATOR.nextDouble(lBound, uBound);
+    }
+
+    /**
+     * Gets a random double value to represent a heading in the bounds of 0 and 2 pi.
+     * @return double - the random heading value in radians
+     */
+    public static double randomHeading()
+    {
+        return getRandom(0, 2 * Math.PI);
+    }
+
+    public static double getRandomWExclusion(double lBound, double uBound, double excludeL, double excludeH)
+    {
+        double rand;
+        do 
+        {
+            rand = GENERATOR.nextDouble(lBound, uBound);
+
+        } while (rand >= excludeL && rand <= excludeH);
+
+
+        return rand;
+    }
+
+
+    public static double getRandomExcludeStart(String xOrY)
+    {
+        Double ret = -1.0;
+        if (xOrY.equals("x")) ret = getRandomWExclusion(0, SCREEN_WIDTH, (SCREEN_WIDTH / 2) - 20, (SCREEN_WIDTH / 2) + 20);
+        else if (xOrY.equals("y")) ret = getRandomWExclusion(0, SCREEN_HEIGHT, (SCREEN_HEIGHT / 2) - 20, (SCREEN_HEIGHT / 2) + 20);
+        return ret;
+    }
+
+
+    
+
 
 }

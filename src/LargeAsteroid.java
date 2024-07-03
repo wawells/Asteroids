@@ -18,10 +18,10 @@ public class LargeAsteroid extends Asteroid
     public LargeAsteroid()
     {
 
-        setX(GameDriver.GENERATOR.nextDouble(0, GameDriver.SCREEN_WIDTH));
-        setY(GameDriver.GENERATOR.nextDouble(0, GameDriver.SCREEN_HEIGHT));
+        setX(GameDriver.getRandomExcludeStart("x"));
+        setY(GameDriver.getRandomExcludeStart("y"));
         setPoints(POINTS);
-        setSpeed(1.0);
+        setSpeed(Asteroid.SPEED);
         setRadius(40);
         setPose(new Pose(getXPos(), getYPos(), getHeading()));
         setVelocity(new Vector2D(getHeading(), getSpeed()));

@@ -10,9 +10,9 @@ public class SmallAsteroid extends Asteroid
 
     public SmallAsteroid()
     {
-        this.setX(GameDriver.GENERATOR.nextDouble(20, GameDriver.SCREEN_WIDTH - 20));
-        this.setY(GameDriver.GENERATOR.nextDouble(20, GameDriver.SCREEN_HEIGHT - 20));
-        setSpeed(1.0);
+        setX(GameDriver.getRandomExcludeStart("x"));
+        setY(GameDriver.getRandomExcludeStart("y"));
+        setSpeed(Asteroid.SPEED);
         setRadius(10);
         setPose(new Pose(getXPos(), getYPos(), this.getHeading()));
         setVelocity(new Vector2D(this.pose.getHeading(), getSpeed()));

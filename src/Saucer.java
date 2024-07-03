@@ -9,6 +9,7 @@ public class Saucer extends Collisions
     public static final double WIDTH = 20;
     public static final double HEIGHT = 10;
     public static final double POINTS = 400;
+    public static final double SPEED = 3.0;
 
     private double initHeading;
     private double initVel;
@@ -20,11 +21,11 @@ public class Saucer extends Collisions
     {
         setX(GameDriver.GENERATOR.nextDouble(0, GameDriver.SCREEN_WIDTH));
         setY(GameDriver.GENERATOR.nextDouble(0, GameDriver.SCREEN_HEIGHT));
-        setSpeed(3.0);
+        setSpeed(SPEED);
         setPoints(POINTS);
 
-        this.initHeading = randomHeading();
-        this.initVel = randomHeading();
+        this.initHeading = GameDriver.randomHeading();
+        this.initVel = GameDriver.randomHeading();
 
         setPose(new Pose(getXPos(), getYPos(), initHeading));
         setVelocity(new Vector2D(this.pose.getHeading(), initVel));
@@ -48,10 +49,10 @@ public class Saucer extends Collisions
         if (isAlive())
         {
             //5 percent chance to set a new random heading
-            double dirProb = getRandom(0, 1);
+            double dirProb = GameDriver.getRandom(0, 1);
             if (dirProb > 0.95)
             {
-                setPose(getPose().newHeading(randomHeading()));
+                setPose(getPose().newHeading(GameDriver.randomHeading()));
             }
             setPose(pose.move(velocity));
             setX(getPose().getX());
@@ -86,24 +87,5 @@ public class Saucer extends Collisions
     }
 
 
-    /**
-     * Gets a random double value between two bounds.
-     * @param lBound double - the lower bound
-     * @param uBound double - the upper bound
-     * @return double - the random value
-     */
-    private double getRandom(double lBound, double uBound)
-    {
-        return GameDriver.GENERATOR.nextDouble(lBound, uBound);
-    }
 
-    /**
-     * Gets a random double value to represent a heading in the bounds of 0 and 2 pi.
-     * @return double - the random heading value in radians
-     */
-    private double randomHeading()
-    {
-        return getRandom(0, 2 * Math.PI);
-    }
-    
 }

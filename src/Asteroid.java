@@ -6,6 +6,7 @@ package src;
  */
 public abstract class Asteroid extends Collisions
 {
+  public static final double SPEED = 1.0;
   protected int radius;
   
   protected int getRadius()
@@ -20,7 +21,7 @@ public abstract class Asteroid extends Collisions
 
   protected double getHeading()
   {
-    return GameDriver.GENERATOR.nextDouble(0, 2 * Math.PI);
+    return GameDriver.randomHeading();
   }
 
   public abstract Asteroid respawn();

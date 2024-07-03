@@ -12,6 +12,7 @@ public class Ship extends Collisions
     public static final double WIDTH = 10.0;
     public static final double HEIGHT = 20.0;
     public static final double INIT_HEADING = 1.5708;
+    public static final double SPEED = 2.0;
 
     private int numFired;
     private boolean canShoot;
@@ -34,7 +35,7 @@ public class Ship extends Collisions
     {
         setX(GameDriver.SCREEN_WIDTH/2);
         setY(GameDriver.SCREEN_HEIGHT/2);
-        setSpeed(1.0);
+        setSpeed(SPEED);
         setPose(new Pose(getXPos(), getYPos(), INIT_HEADING));
         setVelocity(new Vector2D(this.pose.getHeading(), 0));
         

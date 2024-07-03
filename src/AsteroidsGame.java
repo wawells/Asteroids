@@ -96,12 +96,11 @@ public class AsteroidsGame implements Playable
         double curScore = sBoard.getScore();
 
         //create more asteroids if reaching target score
-        if (curScore / levelCount > 1000 && Math.round(curScore / 1000) == levelCount) //TODO how to get asteroids to only spawn once every thousand points
+        if (curScore / levelCount > 1000 && Math.floor(curScore / 1000) == levelCount)
         {
-            initAsts += 9;
+            initAsts += 3;
             levelCount++;
             createAsteroids(initAsts);
-            updateALists();
         }
 
         //create a saucer with .002 probability if it is not alive
@@ -111,7 +110,6 @@ public class AsteroidsGame implements Playable
             if (saucerProb > 0.998)
             {
                 saucer.setAlive();
-                System.out.println("Spawning saucer!");
             } 
 
         }
@@ -172,6 +170,8 @@ public class AsteroidsGame implements Playable
                 int lives = ship.getLives();
                 ship = new Ship(lives - 1);
                 lBoard.reduce();
+
+                System.out.println("Collision detected");
             }
 
             //destroy the asteroid that collided
@@ -234,6 +234,7 @@ public class AsteroidsGame implements Playable
      */
     private void updateALists()
     {
+        //TODO are old asteroid objects still drawing and updating?
         for (int i = 0; i < smlAs.size(); i++)
         {
             if (!smlAs.get(i).isAlive()) smlAs.remove(i);
