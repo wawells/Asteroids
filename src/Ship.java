@@ -17,7 +17,6 @@ public class Ship extends Collisions
     private int numFired;
     private boolean canShoot;
     private boolean firing;
-    private boolean alive;
 
     /**
      * Default constructor to create a ship with 3 lives.
@@ -44,7 +43,6 @@ public class Ship extends Collisions
         this.canShoot = false;
         this.firing = false;
         this.numFired = 0;
-        this.alive = true;
     }
 
     @Override
