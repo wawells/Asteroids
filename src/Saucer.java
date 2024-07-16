@@ -9,7 +9,7 @@ public class Saucer extends Collisions
     public static final double WIDTH = 20;
     public static final double HEIGHT = 10;
     public static final double POINTS = 400;
-    public static final double SPEED = 3.0;
+    public static final double SPEED = 1.0;
 
     private double initHeading;
     private double initVel;
@@ -50,10 +50,11 @@ public class Saucer extends Collisions
         {
             //5 percent chance to set a new random heading
             double dirProb = GameDriver.getRandom(0, 1);
-            if (dirProb > 0.95)
+            if (dirProb >= 0.95)
             {
                 setPose(getPose().newHeading(GameDriver.randomHeading()));
             }
+            setVelocity(getVelocity().newHeading(getPose().getHeading()));
             setPose(pose.move(velocity));
             setX(getPose().getX());
             setY(getPose().getY());

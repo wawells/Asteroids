@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class MediumAsteroid extends Asteroid
 {
-    public static final int POINTS = 100;
+    public static final int POINTS = 50;
     public static final int RADIUS = 25;
     private boolean isAlive;
 

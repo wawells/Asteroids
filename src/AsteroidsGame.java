@@ -21,12 +21,14 @@ public class AsteroidsGame implements Playable
 
     private int initAsts;
     private int levelCount;
+    private int stepCount;
 
 
     public AsteroidsGame()
     {
         initAsts = 15;
         levelCount = 1;
+        stepCount = 0;
 
         //draw the stars
         stars = Star.getStars(100);
@@ -95,12 +97,13 @@ public class AsteroidsGame implements Playable
         ship.update();
         double curScore = sBoard.getScore();
 
-        //create more asteroids if reaching target score
-        if (curScore / levelCount > 1000 && Math.floor(curScore / 1000) == levelCount)
+        //create more asteroids every 1000 points or if all destroyed
+        if (curScore / levelCount > 1000 && Math.floor(curScore / 1000) == levelCount || allDestroyed())
         {
             initAsts += 3;
             levelCount++;
             createAsteroids(initAsts);
+            stepCount = 0;
         }
 
         //create a saucer with .002 probability if it is not alive
@@ -139,9 +142,10 @@ public class AsteroidsGame implements Playable
             lrg.update();
         }
 
-        checkShipCollisions();
+        if (stepCount > 150) checkShipCollisions(); //grant a brief period of immunity upon start
         if (ship.firing()) checkBulletCollisions();
         updateALists();
+        stepCount++;
     }
     
     
@@ -167,6 +171,7 @@ public class AsteroidsGame implements Playable
             //either decrement lives and respawn or destroy the ship and end the game.
             if (ship.isAlive())
             {
+                this.stepCount = 0; //grant immunity when the ship respawns
                 int lives = ship.getLives();
                 ship = new Ship(lives - 1);
                 lBoard.reduce();
@@ -234,7 +239,6 @@ public class AsteroidsGame implements Playable
      */
     private void updateALists()
     {
-        //TODO are old asteroid objects still drawing and updating?
         for (int i = 0; i < smlAs.size(); i++)
         {
             if (!smlAs.get(i).isAlive()) smlAs.remove(i);
@@ -263,6 +267,16 @@ public class AsteroidsGame implements Playable
         medAs = MediumAsteroid.getAsteroids(numSize);
         lrgAs = LargeAsteroid.getAsteroids(numSize);
 
+
+    }
+
+    /**
+     * Checks for any remaining asteroids.
+     * @return true if all asteroids are destroyed, false if there are still asteroids.
+     */
+    private boolean allDestroyed()
+    {
+        return smlAs.size() + medAs.size() + lrgAs.size() < 1;
 
     }
     

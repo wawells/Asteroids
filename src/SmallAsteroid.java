@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class SmallAsteroid extends Asteroid 
 {
-    public static final int POINTS = 200;
+    public static final int POINTS = 100;
     public static final int RADIUS = 10;
     private boolean isAlive;
 
